@@ -212,20 +212,21 @@ nav {
 /* WORK CARDS — ASYMMETRIC GRID */
 .work-asymmetric {
   display: grid;
-  grid-template-columns: 3fr 2fr;
-  grid-template-rows: auto auto;
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(26,23,20,0.1);
+  margin-bottom: 1px;
 }
 
-.work-asymmetric .card:nth-child(1) { grid-column: 1; grid-row: 1; }
-.work-asymmetric .card:nth-child(2) { grid-column: 2; grid-row: 1 / 3; }
-.work-asymmetric .card:nth-child(3) { grid-column: 1; grid-row: 2; }
+.work-asymmetric .card:nth-child(1) { grid-column: 1 / 3; }
+.work-asymmetric .card:nth-child(2) { grid-column: 3; }
+.work-asymmetric .card:nth-child(3) { display: none; }
 
 .work-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 1.5rem;
+  gap: 1px;
+  background: rgba(26,23,20,0.1);
 }
 
 .card {
@@ -580,11 +581,12 @@ footer {
 <nav>
   <a class="nav-logo" href="#">PK</a>
   <ul class="nav-links">
-    <li><a href="#work">作品</a></li>
-    <li><a href="#exhibition">展覽</a></li>
-    <li><a href="#shiaobao">小事報</a></li>
-    <li><a href="#ai">AI</a></li>
+    <li><a href="#work">品牌作品</a></li>
+    <li><a href="#exhibition">影像製作</a></li>
+    <li><a href="#shiaobao">活動策劃</a></li>
+    <li><a href="#ai">AI 專案</a></li>
     <li><a href="#personal">自媒體</a></li>
+    <li><a href="exchange.html">海外交換</a></li>
     <li><a href="#contact">聯絡</a></li>
   </ul>
 </nav>
@@ -624,82 +626,97 @@ footer {
   <div class="section-marker reveal">
     <div class="section-marker-num">01</div>
     <div class="section-marker-text">
-      <p class="section-marker-label">Selected Work</p>
+      <p class="section-marker-label">品牌作品 · Selected Work</p>
       <h2 class="section-marker-title">作品選輯</h2>
     </div>
   </div>
 
-  <div class="work-asymmetric">
-    <div class="card accent-rust reveal">
-      <p class="card-industry">Government · Social Media</p>
-      <h3 class="card-brand">高雄市政府<br>農業局</h3>
-      <p class="card-desc">負責官方粉絲專頁的社群內容規劃與執行，包含文案撰寫、圖文設計及限時動態視覺設計。</p>
-      <div class="card-tags">
-        <span class="card-tag">社群文案</span>
-        <span class="card-tag">圖文設計</span>
-        <span class="card-tag">限時動態</span>
-      </div>
-      <a class="card-link" href="https://www.facebook.com/KSSG12/?locale=zh_TW" target="_blank">查看粉絲專頁 →</a>
-    </div>
 
-    <div class="card accent-sage reveal" style="transition-delay:0.1s">
-      <p class="card-industry">Food & Beverage</p>
-      <h3 class="card-brand">森永製果<br>台灣</h3>
-      <p class="card-desc">社群圖文設計及短影音製作，結合 AI 工具提升內容產出效率。</p>
-      <div class="card-tags">
-        <span class="card-tag">社群圖文</span>
-        <span class="card-tag">短影音</span>
-        <span class="card-tag">AI 輔助</span>
-      </div>
-      <a class="card-link" href="https://www.instagram.com/morinaga.tw" target="_blank">查看 Instagram →</a>
+  <!-- 短影音 -->
+  <div class="work-category reveal">
+    <div class="work-category-header">
+      <span class="work-category-line"></span>
+      <h3 class="work-category-title">短影音</h3>
+      <span class="work-category-en">Short-form Video</span>
     </div>
-
-    <div class="card accent-sand reveal" style="transition-delay:0.2s">
-      <p class="card-industry">Fashion · Video Production</p>
-      <h3 class="card-brand">GU Taiwan</h3>
-      <p class="card-desc">到店執行拍攝、整理影片素材，負責短影音剪輯及腳本分鏡示意圖製作。</p>
-      <div class="card-tags">
-        <span class="card-tag">實地拍攝</span>
-        <span class="card-tag">影片剪輯</span>
-        <span class="card-tag">腳本分鏡</span>
+    <div class="cards-grid">
+      <div class="card accent-sand reveal" style="transition-delay:0.05s">
+        <p class="card-industry">Fashion · Video Production</p>
+        <h3 class="card-brand">GU Taiwan</h3>
+        <p class="card-desc">到店執行拍攝、整理影片素材，負責短影音剪輯及腳本分鏡示意圖製作。</p>
+        <div class="card-tags">
+          <span class="card-tag">實地拍攝</span>
+          <span class="card-tag">影片剪輯</span>
+          <span class="card-tag">腳本分鏡</span>
+        </div>
+        <a class="card-link" href="gu-works.html">查看全部影片 →</a>
       </div>
-      <a class="card-link" href="gu-works.html">查看全部影片 →</a>
+
+      <div class="card accent-sage reveal" style="transition-delay:0.1s">
+        <p class="card-industry">Food & Beverage</p>
+        <h3 class="card-brand">森永製果<br>台灣</h3>
+        <p class="card-desc">社群圖文設計及短影音製作，結合 AI 工具提升內容產出效率。</p>
+        <div class="card-tags">
+          <span class="card-tag">短影音剪輯</span>
+          <span class="card-tag">AI 輔助</span>
+        </div>
+        <a class="card-link" href="morinaga-works.html">查看全部影片 →</a>
+      </div>
+
+      <div class="card accent-rust reveal" style="transition-delay:0.15s">
+        <p class="card-industry">Healthcare · Dental</p>
+        <h3 class="card-brand">鼎極牙醫<br>× 隱適美</h3>
+        <p class="card-desc">牙醫診所與牙齒矯正品牌短影音製作，到店實拍、腳本分鏡與剪輯後製。</p>
+        <div class="card-tags">
+          <span class="card-tag">實地拍攝</span>
+          <span class="card-tag">影片剪輯</span>
+          <span class="card-tag">腳本分鏡</span>
+        </div>
+        <a class="card-link" href="https://www.instagram.com/reel/DWAyOSHgVkt/" target="_blank">觀看影片 →</a>
+      </div>
     </div>
   </div>
 
-  <div class="work-row">
-    <div class="card accent-rust reveal" style="transition-delay:0.1s">
-      <p class="card-industry">Healthcare · Video</p>
-      <h3 class="card-brand">鼎極牙醫</h3>
-      <p class="card-desc">診所品牌短影音製作，到店實拍、腳本規劃與剪輯後製。</p>
-      <div class="card-tags">
-        <span class="card-tag">實地拍攝</span>
-        <span class="card-tag">影片剪輯</span>
-        <span class="card-tag">腳本分鏡</span>
-      </div>
-      <a class="card-link" href="https://www.instagram.com/reel/DWAyOSHgVkt/" target="_blank">觀看影片 →</a>
+  <!-- 社群貼文 -->
+  <div class="work-category reveal">
+    <div class="work-category-header">
+      <span class="work-category-line"></span>
+      <h3 class="work-category-title">社群貼文</h3>
+      <span class="work-category-en">Social Media</span>
     </div>
-
-    <div class="card accent-sage reveal" style="transition-delay:0.2s">
-      <p class="card-industry">Electronics · Video</p>
-      <h3 class="card-brand">聲寶<br>SAMPO</h3>
-      <p class="card-desc">接收品牌素材，獨立完成廣告影片剪輯後製，符合品牌視覺規範。</p>
-      <div class="card-tags">
-        <span class="card-tag">素材整理</span>
-        <span class="card-tag">影片剪輯</span>
-        <span class="card-tag">廣告後製</span>
+    <div class="cards-grid cards-grid-single">
+      <div class="card accent-rust reveal" style="transition-delay:0.05s">
+        <p class="card-industry">Government · Social Media</p>
+        <h3 class="card-brand">高雄市政府<br>農業局</h3>
+        <p class="card-desc">負責官方粉絲專頁的社群內容規劃與執行，包含文案撰寫、圖文設計及限時動態視覺設計。</p>
+        <div class="card-tags">
+          <span class="card-tag">社群文案</span>
+          <span class="card-tag">圖文設計</span>
+          <span class="card-tag">限時動態</span>
+        </div>
+        <a class="card-link" href="kaohsiung-works.html">查看全部作品 →</a>
       </div>
-      <a class="card-link" href="https://www.facebook.com/share/v/1J2aY3FQRZ/" target="_blank">觀看影片 →</a>
     </div>
+  </div>
 
-    <div class="card accent-sand reveal" style="transition-delay:0.3s">
-      <p class="card-industry">Healthcare · Dental</p>
-      <h3 class="card-brand">隱適美<br>Invisalign</h3>
-      <p class="card-desc">協助品牌短影音製作，到店實拍、素材整理與剪輯。</p>
-      <div class="card-tags">
-        <span class="card-tag">實地拍攝</span>
-        <span class="card-tag">影片剪輯</span>
-        <span class="card-tag">腳本分鏡</span>
+  <!-- 廣告 -->
+  <div class="work-category reveal">
+    <div class="work-category-header">
+      <span class="work-category-line"></span>
+      <h3 class="work-category-title">廣告</h3>
+      <span class="work-category-en">Advertisement</span>
+    </div>
+    <div class="cards-grid cards-grid-single">
+      <div class="card accent-sage reveal" style="transition-delay:0.05s">
+        <p class="card-industry">Electronics · Ad Production</p>
+        <h3 class="card-brand">聲寶 SAMPO</h3>
+        <p class="card-desc">接收品牌提供的素材，獨立完成廣告影片剪輯後製，使成品符合品牌視覺規範與傳播需求。</p>
+        <div class="card-tags">
+          <span class="card-tag">素材整理</span>
+          <span class="card-tag">影片剪輯</span>
+          <span class="card-tag">廣告後製</span>
+        </div>
+        <a class="card-link" href="https://www.facebook.com/share/v/1J2aY3FQRZ/" target="_blank">觀看影片 →</a>
       </div>
     </div>
   </div>
@@ -712,7 +729,7 @@ footer {
   <div class="section-marker reveal">
     <div class="section-marker-num">02</div>
     <div class="section-marker-text">
-      <p class="section-marker-label">Exhibition Project · 2024.05</p>
+      <p class="section-marker-label">影像製作 · Exhibition Project · 2024.05</p>
       <h2 class="section-marker-title">畢業展覽</h2>
     </div>
   </div>
@@ -753,7 +770,7 @@ footer {
   <div class="section-marker reveal">
     <div class="section-marker-num">03</div>
     <div class="section-marker-text">
-      <p class="section-marker-label">Community Project · 2022–2023</p>
+      <p class="section-marker-label">活動策劃 · Community Project · 2022–2023</p>
       <h2 class="section-marker-title">小事報</h2>
     </div>
   </div>
@@ -837,7 +854,7 @@ footer {
     </div>
   </div>
 
-  <div class="personal-layout">
+  <div class="personal-layout" style="grid-template-columns: repeat(3, 1fr);">
     <div class="personal-card reveal-left">
       <span class="personal-badge">飾品創作</span>
       <h3 class="personal-name">Warmshines</h3>
@@ -851,7 +868,7 @@ footer {
       <a class="card-link" href="https://www.instagram.com/warmshines" target="_blank">查看 Instagram →</a>
     </div>
 
-    <div class="personal-card reveal-right">
+    <div class="personal-card reveal" style="transition-delay:0.1s">
       <span class="personal-badge">旅行攝影</span>
       <h3 class="personal-name">Take a Rest<br>Travel</h3>
       <p class="personal-handle">@take_a_rest_travel</p>
@@ -862,6 +879,19 @@ footer {
         <span class="card-tag">內容策展</span>
       </div>
       <a class="card-link" href="https://www.instagram.com/take_a_rest_travel" target="_blank">查看 Instagram →</a>
+    </div>
+
+    <div class="personal-card reveal-right">
+      <span class="personal-badge">日常 Vlog</span>
+      <h3 class="personal-name">Peggy<br>Daily Vlog</h3>
+      <p class="personal-handle">@peggy_dailyvlog</p>
+      <p class="personal-desc">YouTube 日常 vlog，記錄生活片段與日常感受，從拍攝到剪輯全程自主製作。</p>
+      <div class="card-tags" style="margin-bottom:1.5rem;">
+        <span class="card-tag">影片剪輯</span>
+        <span class="card-tag">日常紀錄</span>
+        <span class="card-tag">自主製作</span>
+      </div>
+      <a class="card-link" href="https://youtube.com/@peggy_dailyvlog" target="_blank">查看 YouTube →</a>
     </div>
   </div>
 </section>
@@ -948,6 +978,23 @@ footer {
     document.body.style.overflow = '';
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.card[data-type]').forEach(card => {
+        if (filter === 'all' || card.dataset.type.includes(filter)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
 </script>
 </body>
 </html>

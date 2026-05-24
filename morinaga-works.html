@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peggy Ku × 森永製果</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f0ebe1;
+  --ink: #1a1714;
+  --rust: #c94f2a;
+  --sage: #6b8c6e;
+  --sand: #d4b896;
+  --fog: #e8e2d9;
+  --deep: #2a2420;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 13px; overflow-x: hidden; cursor: none; }
+
+.cursor { position: fixed; width: 12px; height: 12px; background: var(--rust); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; mix-blend-mode: multiply; }
+.cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--rust); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; opacity: 0.5; }
+
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(240,235,225,0.92); backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(26,23,20,0.08);
+}
+.nav-back { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.5; transition: opacity 0.3s; }
+.nav-back:hover { opacity: 1; }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; letter-spacing: 0.05em; color: var(--ink); text-decoration: none; }
+
+.hero {
+  min-height: 55vh;
+  padding: 8rem 2.5rem 4rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2rem;
+  align-items: end;
+  border-bottom: 2px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; right: -1rem; bottom: -1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 20vw; font-weight: 900;
+  color: rgba(26,23,20,0.03);
+  line-height: 1; pointer-events: none;
+}
+
+.hero-label { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rust); margin-bottom: 1rem; }
+.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 0.9; color: var(--ink); }
+.hero-title em { font-style: italic; color: var(--rust); display: block; }
+
+.hero-right { text-align: right; }
+.hero-count { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: var(--sand); line-height: 1; }
+.hero-count-label { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep); opacity: 0.4; margin-top: 0.5rem; }
+
+.roles-strip {
+  display: flex;
+  border-bottom: 1px solid rgba(26,23,20,0.1);
+  padding: 0 2.5rem;
+}
+.role-item {
+  padding: 1rem 1.5rem; border-right: 1px solid rgba(26,23,20,0.1);
+  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep); opacity: 0.5;
+}
+.role-item:last-child { border-right: none; }
+
+.grid-section { padding: 4rem 2.5rem; }
+.grid-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--deep); opacity: 0.4; margin-bottom: 2rem; }
+
+.reel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.reel-card {
+  background: var(--fog);
+  border: 1px solid rgba(26,23,20,0.08);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.reel-card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--rust); }
+.reel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--rust); }
+
+.reel-card a { display: block; text-decoration: none; color: inherit; }
+
+.reel-visual {
+  aspect-ratio: 9/14;
+  background: var(--cream);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(26,23,20,0.06);
+  position: relative; overflow: hidden;
+}
+
+.reel-visual::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(201,79,42,0.04) 0%, transparent 60%);
+}
+
+.ig-icon {
+  width: 44px; height: 44px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ig-icon svg { width: 24px; height: 24px; fill: white; }
+
+.play-btn {
+  width: 44px; height: 44px;
+  border: 1px solid rgba(26,23,20,0.15);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.play-btn svg { width: 14px; height: 14px; fill: var(--ink); margin-left: 3px; }
+.reel-card:hover .play-btn { opacity: 1; }
+
+.reel-visual-label {
+  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--deep); opacity: 0.4;
+}
+
+.reel-info { padding: 1.2rem 1.5rem; }
+.reel-num { font-size: 0.45rem; letter-spacing: 0.2em; color: var(--rust); margin-bottom: 0.4rem; }
+.reel-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+.reel-type { font-size: 0.48rem; letter-spacing: 0.12em; color: var(--deep); opacity: 0.4; margin-bottom: 0.75rem; }
+.reel-cta {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--rust); transition: gap 0.3s;
+}
+.reel-card:hover .reel-cta { gap: 0.7rem; }
+
+footer {
+  border-top: 1px solid rgba(26,23,20,0.1);
+  padding: 1.2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy { font-size: 0.5rem; letter-spacing: 0.15em; color: var(--deep); opacity: 0.3; }
+.footer-back { font-size: 0.5rem; letter-spacing: 0.15em; color: var(--ink); text-decoration: none; text-transform: uppercase; opacity: 0.4; transition: opacity 0.3s; }
+.footer-back:hover { opacity: 1; }
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .hero { padding: 6rem 1.5rem 3rem; grid-template-columns: 1fr; }
+  .grid-section { padding: 3rem 1.5rem; }
+  .reel-grid { grid-template-columns: repeat(2, 1fr); }
+  .roles-strip { padding: 0 1.5rem; flex-wrap: wrap; }
+  footer { padding: 1rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a class="nav-back" href="index.html">← 返回作品集</a>
+  <a class="nav-logo" href="index.html">PK</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-label">Food & Beverage · Content</p>
+    <h1 class="hero-title">森永製果<br><em>Taiwan</em></h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-count">5</p>
+    <p class="hero-count-label">支影片作品</p>
+  </div>
+  <div class="hero-bg" aria-hidden="true">森</div>
+</div>
+
+<div class="roles-strip">
+  <div class="role-item">社群圖文設計</div>
+  <div class="role-item">短影音剪輯</div>
+  <div class="role-item">AI 輔助創作</div>
+  <div class="role-item">Instagram Reels</div>
+</div>
+
+<div class="grid-section">
+  <p class="grid-label">全部作品 · All Works</p>
+  <div class="reel-grid">
+
+    <div class="reel-card reveal">
+      <a href="https://www.instagram.com/reel/DVdVr75kcsr/" target="_blank">
+        <div class="reel-visual">
+          <div class="ig-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="reel-visual-label">Instagram Reel</span>
+        </div>
+        <div class="reel-info">
+          <p class="reel-num">森永 · 01</p>
+          <p class="reel-title">Reel</p>
+          <p class="reel-type">短影音剪輯 · AI 輔助</p>
+          <p class="reel-cta">觀看影片 →</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="reel-card reveal" style="transition-delay:0.08s">
+      <a href="https://www.instagram.com/reel/DVYMGJ6Db_x/" target="_blank">
+        <div class="reel-visual">
+          <div class="ig-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="reel-visual-label">Instagram Reel</span>
+        </div>
+        <div class="reel-info">
+          <p class="reel-num">森永 · 02</p>
+          <p class="reel-title">Reel</p>
+          <p class="reel-type">短影音剪輯 · AI 輔助</p>
+          <p class="reel-cta">觀看影片 →</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="reel-card reveal" style="transition-delay:0.16s">
+      <a href="https://www.instagram.com/reel/DVLUHxgjQ6h/" target="_blank">
+        <div class="reel-visual">
+          <div class="ig-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="reel-visual-label">Instagram Reel</span>
+        </div>
+        <div class="reel-info">
+          <p class="reel-num">森永 · 03</p>
+          <p class="reel-title">Reel</p>
+          <p class="reel-type">短影音剪輯 · AI 輔助</p>
+          <p class="reel-cta">觀看影片 →</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="reel-card reveal" style="transition-delay:0.24s">
+      <a href="https://www.instagram.com/reel/DTaBPsWkveF/" target="_blank">
+        <div class="reel-visual">
+          <div class="ig-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="reel-visual-label">Instagram Reel</span>
+        </div>
+        <div class="reel-info">
+          <p class="reel-num">森永 · 04</p>
+          <p class="reel-title">Reel</p>
+          <p class="reel-type">短影音剪輯 · AI 輔助</p>
+          <p class="reel-cta">觀看影片 →</p>
+        </div>
+      </a>
+    </div>
+
+    <div class="reel-card reveal" style="transition-delay:0.32s">
+      <a href="https://www.instagram.com/p/DWD9po5CDka/" target="_blank">
+        <div class="reel-visual">
+          <div class="ig-icon"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <span class="reel-visual-label">Instagram Post</span>
+        </div>
+        <div class="reel-info">
+          <p class="reel-num">森永 · 05</p>
+          <p class="reel-title">Post</p>
+          <p class="reel-type">社群圖文設計</p>
+          <p class="reel-cta">查看作品 →</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p class="footer-copy">© 2026 Peggy Ku</p>
+  <a class="footer-back" href="index.html">← 返回作品集</a>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; cursor.style.left=mx+'px'; cursor.style.top=my+'px'; });
+  function animateRing(){ rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animateRing); }
+  animateRing();
+
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
