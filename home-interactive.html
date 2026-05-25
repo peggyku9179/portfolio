@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peggy Ku — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f0ebe1;
+  --ink: #1a1714;
+  --rust: #c94f2a;
+  --sage: #6b8c6e;
+  --sand: #d4b896;
+  --fog: #e8e2d9;
+  --deep: #2a2420;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { overflow-x: hidden; }
+
+body {
+  background: var(--cream);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  cursor: none;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* CURSOR */
+.cursor { position: fixed; width: 10px; height: 10px; background: var(--rust); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); mix-blend-mode: multiply; transition: width .15s, height .15s; }
+.cursor-ring { position: fixed; width: 32px; height: 32px; border: 1px solid var(--rust); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); opacity: .35; }
+
+/* NOISE */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 9000;
+}
+
+/* CANVAS */
+.canvas {
+  position: fixed; inset: 0;
+  overflow: hidden;
+}
+
+/* BIG NAME */
+.big-name {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(6rem, 16vw, 14rem);
+  font-weight: 900;
+  line-height: 0.82;
+  color: rgba(26,23,20,0.055);
+  letter-spacing: -0.04em;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.big-name em { font-style: italic; display: block; }
+
+/* TOP NAV */
+.topnav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 2rem;
+}
+.topnav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem; font-weight: 900; color: var(--ink);
+  text-decoration: none; letter-spacing: 0.05em;
+}
+.topnav-links { display: flex; gap: 1.8rem; }
+.topnav-links a {
+  font-size: 0.5rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--deep); opacity: .4; text-decoration: none;
+  transition: opacity .25s;
+}
+.topnav-links a:hover { opacity: 1; }
+
+/* BOTTOM BAR */
+.bottombar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: .8rem 2rem;
+  font-size: .42rem; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(26,23,20,.2);
+}
+.bottombar-center {
+  font-family: 'Playfair Display', serif;
+  font-size: .7rem; font-style: italic;
+  color: rgba(26,23,20,.12);
+}
+
+/* FLOATING CARD */
+.card {
+  position: absolute;
+  background: var(--cream);
+  border: 1.5px solid rgba(26,23,20,.18);
+  padding: 0;
+  cursor: grab;
+  user-select: none;
+  transition: transform .5s ease, box-shadow .4s ease, border-color .3s ease;
+  will-change: transform;
+  transform-origin: center center;
+}
+.card.is-open {
+  border-color: var(--ink);
+  box-shadow: 8px 8px 0 rgba(26,23,20,.12);
+}
+.card.dragging { cursor: grabbing; }
+.card.is-open { cursor: default; }
+
+/* CARD HEADER */
+.card-head {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .45rem .75rem;
+  border-bottom: 1.5px solid rgba(26,23,20,.1);
+  cursor: grab;
+}
+.card.is-open .card-head { cursor: default; }
+.card-dot { width: 7px; height: 7px; border-radius: 50%; cursor: pointer; flex-shrink: 0; transition: opacity .2s; }
+.card-dot:hover { opacity: .7; }
+.card-dot.red { background: var(--rust); }
+.card-dot.yellow { background: var(--sand); }
+.card-dot.green { background: var(--sage); }
+.card-head-title {
+  flex: 1; text-align: center;
+  font-size: .42rem; letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(26,23,20,.4);
+}
+
+/* COLLAPSED BODY */
+.card-collapsed {
+  padding: 1.2rem 1.5rem;
+  cursor: default;
+}
+.card-collapsed:hover .card-peek { color: var(--rust); }
+.card-cat {
+  font-size: .4rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: .4rem;
+}
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem; font-weight: 900; color: var(--ink);
+  line-height: 1; margin-bottom: .5rem;
+}
+.card-peek {
+  font-size: .4rem; letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(26,23,20,.3); transition: color .2s;
+}
+
+/* OPEN BODY */
+.card-collapsed {
+  padding: 1.2rem 1.5rem;
+  cursor: default;
+  transition: opacity .3s ease;
+  opacity: 1;
+}
+.card.is-open .card-collapsed {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.card-open {
+  padding: 1.3rem 1.5rem;
+  width: 260px;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  transition: opacity .35s ease;
+}
+.card.is-open .card-open {
+  opacity: 1;
+  position: relative;
+  pointer-events: auto;
+}
+
+/* Smooth height transition wrapper */
+.card-body-wrap {
+  overflow: hidden;
+  transition: max-height .4s cubic-bezier(.22,1,.36,1), opacity .3s ease;
+}
+
+.card-open-cat {
+  font-size: .4rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: .4rem;
+}
+.card-open-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 900; color: var(--ink);
+  line-height: 1; margin-bottom: .75rem;
+}
+.card-open-desc {
+  font-size: .55rem; line-height: 2; letter-spacing: .04em;
+  color: var(--deep); opacity: .65; margin-bottom: 1rem;
+}
+.card-open-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1rem; }
+.card-open-tag {
+  font-size: .42rem; letter-spacing: .08em;
+  padding: .22rem .6rem;
+  border: 1px solid rgba(26,23,20,.12);
+  color: var(--deep); border-radius: 999px;
+}
+.card-open-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: .48rem; letter-spacing: .15em; text-transform: uppercase;
+  color: var(--rust); text-decoration: none;
+  border-bottom: 1px solid rgba(201,79,42,.3);
+  padding-bottom: .1rem;
+  transition: gap .2s, border-color .2s;
+}
+.card-open-link:hover { gap: .7rem; border-color: var(--rust); }
+.card-open-close {
+  display: block; margin-top: .75rem;
+  font-size: .4rem; letter-spacing: .15em; text-transform: uppercase;
+  color: rgba(26,23,20,.3); background: none; border: none;
+  cursor: pointer; font-family: 'Space Mono', monospace;
+  transition: color .2s; padding: 0;
+}
+.card-open-close:hover { color: var(--ink); }
+
+/* DECO ELEMENTS */
+.deco { position: absolute; pointer-events: none; user-select: none; }
+
+/* LOADING SCREEN */
+.loader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem;
+  transition: opacity .6s ease, visibility .6s;
+}
+.loader.hidden { opacity: 0; visibility: hidden; }
+.loader-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 900; color: var(--ink);
+  opacity: 0; animation: fadeUp .8s ease forwards .2s;
+}
+.loader-sub {
+  font-size: .5rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--rust); opacity: 0; animation: fadeUp .8s ease forwards .5s;
+}
+.loader-bar-wrap {
+  width: 160px; height: 1px; background: rgba(26,23,20,.12);
+  position: relative; overflow: hidden; margin-top: .5rem;
+  opacity: 0; animation: fadeUp .8s ease forwards .6s;
+}
+.loader-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--rust);
+  animation: loadBar 1.2s ease forwards .6s;
+}
+
+@keyframes loadBar { from { width: 0; } to { width: 100%; } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes floatIn { from { opacity: 0; transform: translate(var(--fx), var(--fy)) rotate(var(--fr)); } to { opacity: 1; transform: translate(0,0) rotate(var(--rot)); } }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <p class="loader-name">Peggy Ku</p>
+  <p class="loader-sub">Loading Portfolio</p>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+</div>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a class="topnav-logo" href="#">Peggy Ku</a>
+  <div class="topnav-links">
+    <a href="about.html">關於我</a>
+    <a href="index.html">完整作品集</a>
+    <a href="exchange.html">海外交換</a>
+    <a href="#" id="contactTrigger">聯絡</a>
+  </div>
+</nav>
+
+<!-- CANVAS -->
+<div class="canvas" id="canvas">
+
+  <!-- BIG NAME -->
+  <div class="big-name"><span>Peggy</span><em>Ku.</em></div>
+
+  <!-- DECO -->
+  <div class="deco" style="bottom:8%;left:3%;font-family:'Playfair Display',serif;font-size:7rem;font-weight:900;font-style:italic;color:rgba(26,23,20,.04);">2026</div>
+  <div class="deco" style="top:12%;right:3%;font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(26,23,20,.12);writing-mode:vertical-rl;">Marketing · Content · Video · AI</div>
+  <div class="deco" style="width:180px;height:180px;border-radius:50%;border:1px solid rgba(201,79,42,.1);bottom:15%;right:8%;"></div>
+  <div class="deco" style="width:60px;height:60px;border-radius:50%;border:1px solid rgba(107,140,110,.15);top:20%;left:42%;"></div>
+
+  <!-- CARDS (JS will position & animate) -->
+
+  <div class="card" id="c0" data-rot="2">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c0')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">About</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">關於我</p>
+      <p class="card-title">Peggy Ku</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">About Me</p>
+      <p class="card-open-title">Peggy Ku</p>
+      <p class="card-open-desc">具備藝術與設計背景，跨足社群內容、影像製作與活動執行。善用 AI 工具，曾赴斯洛維尼亞交換五個月。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">國立台南藝術大學</span>
+        <span class="card-open-tag">材質創作與設計系</span>
+      </div>
+      <a class="card-open-link" href="about.html">查看完整介紹 →</a>
+    </div>
+  </div>
+
+  <div class="card" id="c1" data-rot="-2.5">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c1')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">Brand Work</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">01 · 品牌作品</p>
+      <p class="card-title">短影音<br>社群 · 廣告</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">Brand Work · 品牌作品</p>
+      <p class="card-open-title">短影音 · 社群<br>廣告製作</p>
+      <p class="card-open-desc">跨產業品牌內容製作，包含短影音剪輯、社群圖文設計與廣告後製。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">GU Taiwan</span>
+        <span class="card-open-tag">森永製果</span>
+        <span class="card-open-tag">高雄農業局</span>
+        <span class="card-open-tag">聲寶</span>
+      </div>
+      <a class="card-open-link" href="index.html#work">查看全部作品 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c2" data-rot="1.8">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c2')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">GU Taiwan</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">Fashion · Video</p>
+      <p class="card-title">GU Taiwan</p>
+      <p class="card-peek">10 支短影音</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">Fashion · Video Production</p>
+      <p class="card-open-title">GU Taiwan</p>
+      <p class="card-open-desc">到店執行拍攝、整理素材，短影音剪輯及腳本分鏡。共 10 支影片。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">實地拍攝</span>
+        <span class="card-open-tag">影片剪輯</span>
+        <span class="card-open-tag">腳本分鏡</span>
+      </div>
+      <a class="card-open-link" href="gu-works.html">查看全部影片 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c3" data-rot="-1.2">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c3')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">森永製果</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">Food & Beverage</p>
+      <p class="card-title">森永製果<br>台灣</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">Food & Beverage · Content</p>
+      <p class="card-open-title">森永製果<br>台灣</p>
+      <p class="card-open-desc">社群圖文設計及短影音製作，結合 AI 工具提升產出效率。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">社群圖文</span>
+        <span class="card-open-tag">短影音</span>
+        <span class="card-open-tag">AI 輔助</span>
+      </div>
+      <a class="card-open-link" href="morinaga-works.html">查看全部作品 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c4" data-rot="3">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c4')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">高雄農業局</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">Government · Social</p>
+      <p class="card-title">高雄市政府<br>農業局</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">Government · Social Media</p>
+      <p class="card-open-title">高雄市政府<br>農業局</p>
+      <p class="card-open-desc">社群文案撰寫、圖文設計及限時動態視覺設計。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">社群文案</span>
+        <span class="card-open-tag">圖文設計</span>
+        <span class="card-open-tag">限時動態</span>
+      </div>
+      <a class="card-open-link" href="kaohsiung-works.html">查看全部作品 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c5" data-rot="-3.5">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c5')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">Yi Yi Yi</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">Exhibition · 2024.05</p>
+      <p class="card-title">Yi Yi Yi<br>畢業展覽</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">Event Planning · Space Design</p>
+      <p class="card-open-title">Yi Yi Yi<br>畢業展覽</p>
+      <p class="card-open-desc">50 人自主籌辦，台北雙場地。場地丈量、1:30 模型製作、動線規劃。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">場地規劃</span>
+        <span class="card-open-tag">比例模型</span>
+        <span class="card-open-tag">動線設計</span>
+      </div>
+      <a class="card-open-link" href="index.html#exhibition">查看詳情 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c6" data-rot="2.2">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c6')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">AI 專案</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">AI Application</p>
+      <p class="card-title">Michelin 馳加<br>AI 客服</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">AI Application</p>
+      <p class="card-open-title">Michelin 馳加<br>AI 知識庫</p>
+      <p class="card-open-desc">建置 AI 客服知識庫，撰寫 AI Agent 系統提示詞，實現品牌一致性的自動化溝通。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">Prompt Engineering</span>
+        <span class="card-open-tag">AI Agent</span>
+        <span class="card-open-tag">知識庫</span>
+      </div>
+      <a class="card-open-link" href="index.html#ai">查看詳情 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c7" data-rot="-1.8">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c7')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">🇸🇮 Exchange</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">Ljubljana · 2024.10–2025.02</p>
+      <p class="card-title">斯洛維尼亞<br>交換生</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">University of Ljubljana · 5 個月</p>
+      <p class="card-open-title">斯洛維尼亞<br>交換經驗</p>
+      <p class="card-open-desc">赴盧比安納大學交換五個月，記錄出發前準備、當地生活、課程與旅行。</p>
+      <a class="card-open-link" href="exchange.html">查看完整簡報 →</a>
+      
+    </div>
+  </div>
+
+  <div class="card" id="c8" data-rot="1.5">
+    <div class="card-head">
+      <div class="card-dot red" onclick="closeCard('c8')"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">自媒體</span>
+    </div>
+    <div class="card-collapsed">
+      <p class="card-cat">Personal Accounts</p>
+      <p class="card-title">Warmshines<br>Travel · Vlog</p>
+      <p class="card-peek">懸停展開 →</p>
+    </div>
+    <div class="card-open">
+      <p class="card-open-cat">Personal Accounts</p>
+      <p class="card-open-title">自媒體經營</p>
+      <p class="card-open-desc">自主經營三個帳號：飾品品牌、旅行攝影、YouTube vlog。</p>
+      <div class="card-open-tags">
+        <span class="card-open-tag">@warmshines</span>
+        <span class="card-open-tag">@take_a_rest_travel</span>
+        <span class="card-open-tag">@peggy_dailyvlog</span>
+      </div>
+      <a class="card-open-link" href="index.html#personal">查看詳情 →</a>
+      
+    </div>
+  </div>
+
+  <!-- CONTACT CARD -->
+  <div class="card" id="cContact" data-rot="-2" style="display:none;z-index:600;">
+    <div class="card-head">
+      <div class="card-dot red" onclick="document.getElementById('cContact').style.display='none'"></div>
+      <div class="card-dot yellow"></div>
+      <div class="card-dot green"></div>
+      <span class="card-head-title">Contact</span>
+    </div>
+    <div class="card-open" style="max-height:500px;opacity:1;">
+      <p class="card-open-cat">聯絡我</p>
+      <p class="card-open-title">Let's Work<br>Together.</p>
+      <p class="card-open-desc">行銷內容 · 社群策略<br>短影音製作 · AI 工具整合</p>
+      <a class="card-open-link" href="mailto:peggyku91@gmail.com" style="display:block;margin-bottom:.6rem;">peggyku91@gmail.com →</a>
+      <a class="card-open-link" href="https://www.linkedin.com/in/古姵蓁peggyku/" target="_blank">LinkedIn →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottombar">
+  <span>© 2026 Peggy Ku</span>
+  <span class="bottombar-center">拖動 · 懸停展開</span>
+  <span>Marketing · Content · AI</span>
+</div>
+
+<script>
+// --- CURSOR ---
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove', e=>{ mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
+(function animR(){ rx+=(mx-rx)*.1; ry+=(my-ry)*.1; ring.style.left=rx+'px'; ring.style.top=ry+'px'; requestAnimationFrame(animR); })();
+document.querySelectorAll('a,button,.card-collapsed').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cur.style.width='18px'; cur.style.height='18px'; });
+  el.addEventListener('mouseleave',()=>{ cur.style.width='10px'; cur.style.height='10px'; });
+});
+
+// --- CARD POSITIONS (left%, top%, rotate) ---
+const positions = [
+  { l:3,  t:14, fx:-80, fy:-30, delay:.1  }, // c1 關於我
+  { l:28, t:6,  fx:20,  fy:-70, delay:.16 }, // c2 短影音社群
+  { l:56, t:10, fx:80,  fy:-40, delay:.22 }, // c3 展覽
+  { l:68, t:38, fx:100, fy:10,  delay:.28 }, // c4 AI
+  { l:5,  t:52, fx:-70, fy:60,  delay:.18 }, // c5 斯洛維尼亞
+  { l:32, t:58, fx:10,  fy:80,  delay:.24 }, // c6 個人品牌
+];
+
+const cards = document.querySelectorAll('.card:not(#cContact)');
+cards.forEach((card, i) => {
+  const p = positions[i];
+  const rot = parseFloat(card.dataset.rot || 0);
+  card.style.left = p.l + '%';
+  card.style.top = p.t + '%';
+  card.style.transform = `rotate(${rot}deg)`;
+  card.style.setProperty('--rot', `${rot}deg`);
+  card.style.setProperty('--fx', p.fx+'px');
+  card.style.setProperty('--fy', p.fy+'px');
+  card.style.setProperty('--fr', `${rot + (Math.random()*10-5)}deg`);
+  card.style.opacity = '0';
+});
+
+// --- LOADER ---
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+    // animate cards in
+    cards.forEach((card, i) => {
+      const p = positions[i];
+      const rot = parseFloat(card.dataset.rot || 0);
+      setTimeout(() => {
+        card.style.transition = 'opacity .7s ease, transform .8s ease';
+        card.style.opacity = '1';
+        card.style.transform = `rotate(${rot}deg)`;
+      }, p.delay * 1000 + 200);
+    });
+  }, 1600);
+});
+
+// --- DRAG ---
+let dragEl=null, offX=0, offY=0, zTop=10;
+
+function bringTop(el){ zTop++; el.style.zIndex=zTop; }
+
+cards.forEach(card => {
+  const bar = card.querySelector('.card-head');
+  bar.addEventListener('mousedown', e => {
+    if(e.target.classList.contains('card-dot')) return;
+    if(card.classList.contains('is-open')) return;
+    dragEl = card;
+    const r = card.getBoundingClientRect();
+    offX = e.clientX - r.left;
+    offY = e.clientY - r.top;
+    card.classList.add('dragging');
+    card.classList.remove('is-open');
+    card.style.transition = 'none';
+    bringTop(card);
+    e.preventDefault();
+  });
+  card.addEventListener('mousedown', () => bringTop(card));
+});
+
+document.addEventListener('mousemove', e => {
+  if(!dragEl) return;
+  const cvs = document.getElementById('canvas').getBoundingClientRect();
+  let x = e.clientX - cvs.left - offX;
+  let y = e.clientY - cvs.top - offY;
+  x = Math.max(0, Math.min(x, cvs.width - dragEl.offsetWidth));
+  y = Math.max(0, Math.min(y, cvs.height - dragEl.offsetHeight));
+  dragEl.style.left = x+'px';
+  dragEl.style.top = y+'px';
+});
+
+document.addEventListener('mouseup', () => {
+  if(dragEl){ dragEl.classList.remove('dragging'); dragEl = null; }
+});
+
+// --- HOVER OPEN / CLOSE ---
+let hoverTimer = {};
+
+function getCardRot(card) {
+  return parseFloat(card.dataset.rot || 0);
+}
+
+cards.forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    clearTimeout(hoverTimer[card.id]);
+    if(dragEl) return;
+    card.classList.add('is-open');
+    bringTop(card);
+    const rot = getCardRot(card);
+    card.style.transform = `rotate(${rot * 0.3}deg) scale(1.06)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    hoverTimer[card.id] = setTimeout(() => {
+      card.classList.remove('is-open');
+      const rot = getCardRot(card);
+      card.style.transform = `rotate(${rot}deg) scale(1)`;
+    }, 180);
+  });
+});
+
+function closeCard(id) {
+  const c = document.getElementById(id);
+  c.classList.remove('is-open');
+}
+function openCard(id) {
+  const c = document.getElementById(id);
+  c.classList.add('is-open');
+  bringTop(c);
+}
+
+// --- CONTACT ---
+document.getElementById('contactTrigger').addEventListener('click', e => {
+  e.preventDefault();
+  const cc = document.getElementById('cContact');
+  cc.style.display = 'block';
+  cc.style.left = '36%';
+  cc.style.top = '28%';
+  const rot = parseFloat(cc.dataset.rot || 0);
+  cc.style.transform = `rotate(${rot}deg)`;
+  bringTop(cc);
+});
+
+// drag contact card too
+const cbar = document.querySelector('#cContact .card-head');
+cbar.addEventListener('mousedown', e => {
+  if(e.target.classList.contains('card-dot')) return;
+  dragEl = document.getElementById('cContact');
+  const r = dragEl.getBoundingClientRect();
+  offX = e.clientX - r.left;
+  offY = e.clientY - r.top;
+  dragEl.classList.add('dragging');
+  dragEl.style.transition = 'none';
+  bringTop(dragEl);
+  e.preventDefault();
+});
+</script>
+</body>
+</html>
