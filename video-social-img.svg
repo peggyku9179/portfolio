@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#1a1714"/>
+  <!-- grid lines -->
+  <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+    <line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="450" x2="800" y2="450"/>
+    <line x1="200" y1="0" x2="200" y2="600"/>
+    <line x1="400" y1="0" x2="400" y2="600"/>
+    <line x1="600" y1="0" x2="600" y2="600"/>
+  </g>
+  <!-- phone shape -->
+  <rect x="290" y="80" width="220" height="400" rx="24" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+  <rect x="305" y="100" width="190" height="340" rx="12" fill="rgba(255,255,255,0.04)"/>
+  <!-- play button -->
+  <circle cx="400" cy="280" r="40" fill="rgba(201,79,42,0.8)"/>
+  <polygon points="390,262 390,298 422,280" fill="white"/>
+  <!-- text -->
+  <text x="400" y="520" font-family="Georgia,serif" font-size="28" font-weight="bold" fill="rgba(240,235,225,0.9)" text-anchor="middle">Short-form Video</text>
+  <text x="400" y="550" font-family="monospace" font-size="13" fill="rgba(240,235,225,0.35)" text-anchor="middle" letter-spacing="3">SOCIAL MEDIA · CONTENT</text>
+  <!-- dots -->
+  <circle cx="160" cy="120" r="6" fill="rgba(201,79,42,0.4)"/>
+  <circle cx="640" cy="440" r="10" fill="rgba(107,140,110,0.3)"/>
+  <circle cx="680" cy="140" r="4" fill="rgba(212,184,150,0.5)"/>
+</svg>

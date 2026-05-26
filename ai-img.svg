@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#2a2420"/>
+  <!-- circuit lines -->
+  <g stroke="rgba(201,79,42,0.2)" stroke-width="1.5" fill="none">
+    <path d="M100,300 L200,300 L200,200 L350,200"/>
+    <path d="M350,200 L350,150 L500,150"/>
+    <path d="M500,150 L650,150 L650,300 L700,300"/>
+    <path d="M100,300 L100,400 L250,400 L250,450"/>
+    <path d="M550,400 L700,400 L700,300"/>
+    <path d="M350,200 L350,350 L550,350 L550,400"/>
+  </g>
+  <!-- nodes -->
+  <g fill="rgba(201,79,42,0.6)">
+    <circle cx="200" cy="300" r="5"/>
+    <circle cx="350" cy="200" r="5"/>
+    <circle cx="500" cy="150" r="5"/>
+    <circle cx="650" cy="300" r="5"/>
+    <circle cx="350" cy="350" r="5"/>
+    <circle cx="550" cy="400" r="5"/>
+    <circle cx="250" cy="450" r="5"/>
+  </g>
+  <!-- center brain/AI icon -->
+  <circle cx="400" cy="300" r="70" fill="rgba(201,79,42,0.12)" stroke="rgba(201,79,42,0.4)" stroke-width="1.5"/>
+  <circle cx="400" cy="300" r="45" fill="rgba(201,79,42,0.08)" stroke="rgba(201,79,42,0.3)" stroke-width="1"/>
+  <text x="400" y="308" font-family="Georgia,serif" font-size="22" font-weight="bold" fill="rgba(201,79,42,0.9)" text-anchor="middle">AI</text>
+  <!-- text -->
+  <text x="400" y="520" font-family="Georgia,serif" font-size="28" font-weight="bold" fill="rgba(240,235,225,0.9)" text-anchor="middle">AI Application</text>
+  <text x="400" y="550" font-family="monospace" font-size="13" fill="rgba(240,235,225,0.3)" text-anchor="middle" letter-spacing="3">PROMPT · AGENT · BUILD</text>
+</svg>
