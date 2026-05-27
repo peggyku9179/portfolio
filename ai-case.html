@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peggy Ku × AI Agent Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f7f3ed;
+  --ink: #1a1714;
+  --brown: #B87229;
+  --rust: #B87229;
+  --sage: #6b8c6e;
+  --sand: #d4b896;
+  --fog: #ede8de;
+  --deep: #2a2420;
+  --dark: #3a1f0a;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;font-size:16px;}
+body{background:var(--cream);color:var(--ink);font-family:'Space Mono',monospace;overflow-x:hidden;cursor:none;}
+
+.cursor{position:fixed;width:10px;height:10px;background:var(--rust);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .15s,height .15s;}
+.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rust);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(240,235,225,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(26,23,20,.08);}
+.nav-back{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .3s;}
+.nav-back:hover{opacity:1;}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--ink);text-decoration:none;}
+
+/* PAGE COUNTER */
+.page-counter{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.75rem;}
+.page-dot{width:6px;height:6px;border-radius:50%;background:rgba(26,23,20,.2);cursor:pointer;transition:all .3s;}
+.page-dot.active{background:var(--rust);transform:scale(1.4);}
+
+/* SECTIONS */
+.page{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:6rem 2.5rem 4rem;position:relative;overflow:hidden;}
+.page:nth-child(even){background:var(--fog);}
+.page-dark{background:#522D12!important;color:var(--cream);}
+
+.page-num{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;}
+.page-dark .page-num{color:var(--sand);}
+
+/* 01 COVER */
+.cover-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem;}
+.cover-tag{font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:.3rem .8rem;border:1px solid rgba(26,23,20,.2);color:var(--deep);}
+.page-dark .cover-tag{border-color:rgba(240,235,225,.15);color:rgba(240,235,225,.5);}
+.cover-title{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,6vw,5.5rem);font-weight:900;line-height:.9;color:var(--ink);letter-spacing:-.02em;margin-bottom:1.5rem;}
+.page-dark .cover-title{color:var(--cream);}
+.cover-title em{font-style:italic;color:var(--rust);}
+.cover-subtitle{font-size:15px;line-height:1.9;color:var(--deep);opacity:.6;max-width:500px;}
+.page-dark .cover-subtitle{color:rgba(240,235,225,.5);}
+.cover-bg{position:absolute;right:-2rem;bottom:-3rem;font-family:'Playfair Display',serif;font-size:18vw;font-weight:900;font-style:italic;color:rgba(184,114,41,.08);line-height:1;pointer-events:none;}
+.page-dark .cover-bg{color:rgba(255,255,255,.04);}
+.confidential-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:11px;letter-spacing:.2em;text-transform:uppercase;border:1px solid rgba(201,79,42,.3);color:var(--rust);padding:.4rem .9rem;margin-top:2rem;}
+
+/* 02 BACKGROUND */
+.bg-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.section-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--ink);line-height:1;margin-bottom:1.5rem;}
+.page-dark .section-title{color:var(--cream);}
+.body-text{font-size:14px;line-height:2.1;color:var(--deep);opacity:.7;margin-bottom:1.5rem;}
+.page-dark .body-text{color:rgba(240,235,225,.6);}
+.notice-box{background:rgba(201,79,42,.06);border-left:3px solid var(--rust);padding:1.2rem 1.5rem;}
+.notice-label{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.5rem;}
+.notice-text{font-size:13px;line-height:1.9;color:var(--deep);opacity:.7;}
+
+/* 03 ROLE */
+.role-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.role-desc{font-size:15px;line-height:2.1;color:var(--deep);opacity:.7;margin-bottom:2rem;border-left:3px solid var(--rust);padding-left:1.5rem;}
+.page-dark .role-desc{color:rgba(240,235,225,.6);border-color:var(--sand);}
+.role-list{display:flex;flex-direction:column;gap:.75rem;}
+.role-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.5rem;background:rgba(26,23,20,.04);transition:background .25s;}
+.page-dark .role-item{background:rgba(255,255,255,.04);}
+.role-item:hover{background:rgba(201,79,42,.08);}
+.role-num{font-size:10px;letter-spacing:.2em;color:var(--rust);flex-shrink:0;width:20px;}
+.role-name{font-size:13px;letter-spacing:.08em;color:var(--ink);}
+.page-dark .role-name{color:var(--cream);}
+
+/* 04 FLOW */
+.flow-wrap{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-top:2rem;}
+.flow-step{text-align:center;padding:1.5rem 1rem;flex:1;min-width:100px;}
+.flow-step-num{font-size:10px;letter-spacing:.2em;color:var(--rust);margin-bottom:.5rem;}
+.flow-step-icon{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(26,23,20,.15);display:flex;align-items:center;justify-content:center;margin:0 auto .75rem;}
+.page-dark .flow-step-icon{border-color:rgba(255,255,255,.12);}
+.flow-step-icon svg{width:18px;height:18px;fill:none;stroke:var(--rust);stroke-width:1.5;}
+.flow-step-name{font-size:12px;letter-spacing:.05em;color:var(--ink);line-height:1.3;}
+.page-dark .flow-step-name{color:var(--cream);}
+.flow-arrow{font-size:18px;color:rgba(26,23,20,.15);flex-shrink:0;padding:0 .25rem;}
+.page-dark .flow-arrow{color:rgba(255,255,255,.1);}
+
+/* 05 ARCHITECTURE */
+.arch-wrap{display:grid;grid-template-columns:280px 1fr;gap:3rem;align-items:start;}
+.arch-chain{display:flex;flex-direction:column;gap:0;}
+.arch-node{padding:1rem 1.5rem;border-left:2px solid rgba(26,23,20,.1);position:relative;}
+.page-dark .arch-node{border-color:rgba(255,255,255,.08);}
+.arch-node::before{content:'';position:absolute;left:-5px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:var(--rust);}
+.arch-node-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.25rem;}
+.arch-node-name{font-size:14px;font-weight:700;color:var(--ink);}
+.page-dark .arch-node-name{color:var(--cream);}
+.arch-desc{font-size:14px;line-height:2;color:var(--deep);opacity:.65;border-left:3px solid rgba(201,79,42,.3);padding-left:1.5rem;}
+.page-dark .arch-desc{color:rgba(240,235,225,.55);}
+
+/* 06 TESTING */
+.test-table{width:100%;border-collapse:collapse;margin-top:1.5rem;}
+.test-table th{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);text-align:left;padding:.75rem 1.2rem;border-bottom:2px solid rgba(26,23,20,.12);background:rgba(201,79,42,.04);}
+.test-table td{font-size:13px;line-height:1.8;color:var(--deep);padding:.9rem 1.2rem;border-bottom:1px solid rgba(26,23,20,.06);vertical-align:top;}
+.test-table tr:hover td{background:rgba(201,79,42,.04);}
+.page-dark .test-table th{color:var(--sand);border-color:rgba(255,255,255,.08);background:rgba(255,255,255,.03);}
+.page-dark .test-table td{color:rgba(240,235,225,.65);border-color:rgba(255,255,255,.05);}
+.page-dark .test-table tr:hover td{background:rgba(255,255,255,.03);}
+
+/* 07 BEFORE AFTER */
+.ba-layout{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1.5rem;}
+.ba-card{padding:2rem;}
+.ba-label{font-size:11px;letter-spacing:.25em;text-transform:uppercase;margin-bottom:1rem;}
+.ba-label.before{color:rgba(26,23,20,.35);}
+.ba-label.after{color:var(--sage);}
+.ba-text{font-size:14px;line-height:2;font-style:italic;}
+.ba-card.before-card{background:rgba(26,23,20,.04);border-left:3px solid rgba(26,23,20,.15);}
+.ba-card.after-card{background:rgba(107,140,110,.06);border-left:3px solid var(--sage);}
+.ba-problem{font-size:11px;letter-spacing:.12em;color:var(--rust);margin-top:.75rem;padding:.4rem .8rem;background:rgba(201,79,42,.06);display:inline-block;}
+
+/* 08 OUTCOME */
+.outcome-layout{display:grid;grid-template-columns:1fr 1fr;gap:3rem;}
+.outcome-list{display:flex;flex-direction:column;gap:.6rem;margin-top:1rem;}
+.outcome-item{display:flex;align-items:flex-start;gap:.75rem;font-size:13px;line-height:1.8;color:var(--deep);opacity:.7;}
+.page-dark .outcome-item{color:rgba(240,235,225,.6);}
+.outcome-item::before{content:'✓';color:var(--sage);flex-shrink:0;font-weight:bold;}
+.reflection-box{background:#522D12;color:var(--cream);padding:2rem;margin-top:1.5rem;}
+.page-dark .reflection-box{background:rgba(255,255,255,.05);}
+.reflection-label{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--sand);margin-bottom:.75rem;}
+.reflection-text{font-size:14px;line-height:2;color:rgba(240,235,225,.7);}
+.ratio-row{display:flex;gap:1rem;margin-top:1.5rem;}
+.ratio-item{flex:1;text-align:center;padding:1rem;border:1px solid rgba(26,23,20,.08);}
+.ratio-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--rust);}
+.ratio-label{font-size:11px;letter-spacing:.1em;color:var(--deep);opacity:.5;margin-top:.25rem;}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+footer{background:#522D12;padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:12px;letter-spacing:.12em;color:rgba(240,235,225,.25);}
+.footer-nav{display:flex;gap:1.5rem;}
+.footer-nav a{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,235,225,.35);text-decoration:none;transition:color .25s;}
+.footer-nav a:hover{color:var(--cream);}
+
+@media(max-width:900px){
+  .bg-layout,.role-layout,.arch-wrap,.ba-layout,.outcome-layout{grid-template-columns:1fr;}
+  .flow-wrap{flex-direction:column;}
+  .flow-arrow{transform:rotate(90deg);}
+  .page{padding:5rem 1.5rem 3rem;}
+  nav{padding:1rem 1.5rem;}
+  .page-counter{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a class="nav-back" href="portfolio.html">← 返回作品集</a>
+  <a class="nav-logo" href="index.html">Peggy Ku</a>
+</nav>
+
+<div class="page-counter" id="pageCounter"></div>
+
+<!-- 01 COVER -->
+<section class="page page-dark" id="p1">
+  <div class="cover-bg">AI</div>
+  <p class="page-num">01 / 08</p>
+  <div class="cover-tags">
+    <span class="cover-tag">AI Agent Design</span>
+    <span class="cover-tag">Prompt Design</span>
+    <span class="cover-tag">Knowledge Base</span>
+    <span class="cover-tag">QA Testing</span>
+    <span class="cover-tag">Brand Tone</span>
+  </div>
+  <h1 class="cover-title">AI Agent<br>角色設定<br><em>與測試優化</em></h1>
+  <p class="cover-subtitle">汽車輪胎品牌客服與短影音陪跑工具設計</p>
+  <div class="confidential-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    已去識別化 · 方法架構呈現
+  </div>
+</section>
+
+<!-- 02 BACKGROUND -->
+<section class="page" id="p2">
+  <p class="page-num reveal">02 / 08 · 專案背景</p>
+  <div class="bg-layout">
+    <div class="reveal">
+      <h2 class="section-title">Project<br>Background</h2>
+      <p class="body-text">本專案為某國際汽車輪胎品牌之 AI Agent 設定案例，目標是協助經銷商第一線人員快速取得產品資訊，並降低短影音內容製作門檻。</p>
+      <p class="body-text">專案需求涵蓋 AI 客服角色設定、品牌知識庫建置，以及針對短影音腳本生成的 Agent 功能模組設計。</p>
+    </div>
+    <div class="reveal">
+      <div class="notice-box">
+        <p class="notice-label">說明</p>
+        <p class="notice-text">因專案涉及品牌內部資料，作品集中已去除品牌名稱、內部連結、活動細節與完整 Prompt 原文，僅呈現方法架構與優化流程。</p>
+      </div>
+      <div style="margin-top:1.5rem;display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div style="padding:1.2rem;background:rgba(26,23,20,.04);">
+          <p style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.4rem;">專案性質</p>
+          <p style="font-size:14px;color:var(--ink);">AI Agent<br>知識庫建置</p>
+        </div>
+        <div style="padding:1.2rem;background:rgba(26,23,20,.04);">
+          <p style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.4rem;">使用對象</p>
+          <p style="font-size:14px;color:var(--ink);">品牌經銷商<br>第一線人員</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 ROLE -->
+<section class="page page-dark" id="p3">
+  <p class="page-num reveal">03 / 08 · 我的角色</p>
+  <div class="role-layout">
+    <div class="reveal">
+      <h2 class="section-title">My Role</h2>
+      <p class="role-desc">我參與 AI Agent 從品牌資料蒐集、知識庫分類、Prompt 架構設計到平台測試與反覆優化的完整流程，將原始品牌資料轉化為可被 AI 穩定讀取、回覆與維護的客服知識系統。</p>
+    </div>
+    <div class="role-list reveal">
+      <div class="role-item">
+        <span class="role-num">01</span>
+        <span class="role-name">品牌資料盤點</span>
+      </div>
+      <div class="role-item">
+        <span class="role-num">02</span>
+        <span class="role-name">知識庫分類</span>
+      </div>
+      <div class="role-item">
+        <span class="role-num">03</span>
+        <span class="role-name">Prompt 架構設計</span>
+      </div>
+      <div class="role-item">
+        <span class="role-num">04</span>
+        <span class="role-name">平台測試</span>
+      </div>
+      <div class="role-item">
+        <span class="role-num">05</span>
+        <span class="role-name">回覆優化</span>
+      </div>
+      <div class="role-item">
+        <span class="role-num">06</span>
+        <span class="role-name">文件整理</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 FLOW -->
+<section class="page" id="p4">
+  <p class="page-num reveal">04 / 08 · 執行流程</p>
+  <h2 class="section-title reveal">Process Flow</h2>
+  <div class="flow-wrap reveal">
+    <div class="flow-step">
+      <p class="flow-step-num">01</p>
+      <div class="flow-step-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <p class="flow-step-name">品牌資料<br>蒐集</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <p class="flow-step-num">02</p>
+      <div class="flow-step-icon">
+        <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </div>
+      <p class="flow-step-name">知識庫<br>分類</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <p class="flow-step-num">03</p>
+      <div class="flow-step-icon">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+      <p class="flow-step-name">Prompt<br>設計</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <p class="flow-step-num">04</p>
+      <div class="flow-step-icon">
+        <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <p class="flow-step-name">平台<br>測試</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <p class="flow-step-num">05</p>
+      <div class="flow-step-icon">
+        <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      </div>
+      <p class="flow-step-name">反覆<br>優化</p>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <p class="flow-step-num">06</p>
+      <div class="flow-step-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <p class="flow-step-name">文件<br>交接</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 ARCHITECTURE -->
+<section class="page page-dark" id="p5">
+  <p class="page-num reveal">05 / 08 · AI Agent 架構</p>
+  <div class="arch-wrap">
+    <div class="arch-chain reveal">
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 01</p>
+        <p class="arch-node-name">角色定位</p>
+      </div>
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 02</p>
+        <p class="arch-node-name">意圖判斷</p>
+      </div>
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 03</p>
+        <p class="arch-node-name">知識來源</p>
+      </div>
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 04</p>
+        <p class="arch-node-name">回覆規範</p>
+      </div>
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 05</p>
+        <p class="arch-node-name">技能模組</p>
+      </div>
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 06</p>
+        <p class="arch-node-name">限制條件</p>
+      </div>
+      <div class="arch-node">
+        <p class="arch-node-label">Layer 07</p>
+        <p class="arch-node-name">測試範例</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <h2 class="section-title">Agent<br>Architecture</h2>
+      <p class="arch-desc">我將 AI 設定拆成可維護的模組，讓後續團隊能理解每一段設定的用途，而不是只拿到一大段 Prompt。</p>
+      <p class="arch-desc" style="margin-top:1.5rem;">每個模組獨立可調整，當品牌資料更新時，只需修改對應層級，不影響整體架構的穩定性。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 TESTING -->
+<section class="page" id="p6">
+  <p class="page-num reveal">06 / 08 · 測試與優化</p>
+  <h2 class="section-title reveal">QA Testing</h2>
+  <table class="test-table reveal">
+    <thead>
+      <tr>
+        <th>測試情境</th>
+        <th>優化重點</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>產品名稱不完整</td>
+        <td>AI 需先追問確認，不可猜測</td>
+      </tr>
+      <tr>
+        <td>詢問產品特色</td>
+        <td>優先回答產品資訊，不引導至競品比較</td>
+      </tr>
+      <tr>
+        <td>詢問活動規則</td>
+        <td>資料不足時不可自行補充，需說明待確認</td>
+      </tr>
+      <tr>
+        <td>需要短影音腳本</td>
+        <td>提供分鏡、口播與拍攝提醒，格式標準化</td>
+      </tr>
+      <tr>
+        <td>語氣太像客服</td>
+        <td>調整為第一線人員可接受的口吻，降低疏離感</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 07 BEFORE AFTER -->
+<section class="page page-dark" id="p7">
+  <p class="page-num reveal">07 / 08 · Before / After</p>
+  <h2 class="section-title reveal">優化案例</h2>
+  <div class="ba-layout reveal">
+    <div class="ba-card before-card">
+      <p class="ba-label before">Before</p>
+      <p class="ba-text" style="color:rgba(240,235,225,.5);">「這款產品是專門為電動車開發。」</p>
+      <p class="ba-problem">⚠ 未確認資料，容易造成產品定位誤導</p>
+    </div>
+    <div class="ba-card after-card">
+      <p class="ba-label after">After</p>
+      <p class="ba-text" style="color:rgba(240,235,225,.7);">「若公開資料或品牌核准內容沒有明確標示電動車定位，AI 不應直接宣稱，需改以較保守且可查證的產品描述。」</p>
+    </div>
+  </div>
+  <p style="font-size:12px;letter-spacing:.12em;color:rgba(240,235,225,.25);margin-top:1.5rem;text-align:center;">此案例已去識別化，僅呈現優化邏輯</p>
+</section>
+
+<!-- 08 OUTCOME -->
+<section class="page" id="p8">
+  <p class="page-num reveal">08 / 08 · 成果與反思</p>
+  <div class="outcome-layout">
+    <div class="reveal">
+      <h2 class="section-title">Outcome</h2>
+      <div class="outcome-list">
+        <div class="outcome-item">完成 AI Agent 設定架構</div>
+        <div class="outcome-item">建立知識庫分類邏輯</div>
+        <div class="outcome-item">設計 Prompt 模組化架構</div>
+        <div class="outcome-item">完成多輪平台測試</div>
+        <div class="outcome-item">修正回覆風險情境</div>
+        <div class="outcome-item">整理可交接文件</div>
+      </div>
+      <div class="ratio-row">
+        <div class="ratio-item">
+          <p class="ratio-num">70%</p>
+          <p class="ratio-label">方法與流程</p>
+        </div>
+        <div class="ratio-item">
+          <p class="ratio-num">20%</p>
+          <p class="ratio-label">優化案例</p>
+        </div>
+        <div class="ratio-item">
+          <p class="ratio-num">10%</p>
+          <p class="ratio-label">去識別範例</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h2 class="section-title">Reflection</h2>
+      <div class="reflection-box">
+        <p class="reflection-label">反思</p>
+        <p class="reflection-text">這次經驗讓我理解，AI Agent 建置不是單純寫 Prompt，而是需要結合資料整理、使用者情境設計、品牌語氣控管、測試驗證與持續優化的完整流程。</p>
+      </div>
+      <div style="margin-top:1.5rem;">
+        <a style="display:inline-flex;align-items:center;gap:.5rem;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.3);padding-bottom:.1rem;" href="portfolio.html">← 返回作品集</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2026 Peggy Ku · 已去識別化案例</p>
+  <div class="footer-nav">
+    <a href="index.html">首頁</a>
+    <a href="portfolio.html">作品集</a>
+    <a href="about.html">關於我</a>
+  </div>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';});
+});
+
+// Page dots
+const pages=document.querySelectorAll('.page');
+const counter=document.getElementById('pageCounter');
+pages.forEach((_,i)=>{
+  const dot=document.createElement('div');
+  dot.className='page-dot';
+  dot.addEventListener('click',()=>pages[i].scrollIntoView({behavior:'smooth'}));
+  counter.appendChild(dot);
+});
+const dots=counter.querySelectorAll('.page-dot');
+const obs2=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const i=Array.from(pages).indexOf(e.target);
+      dots.forEach(d=>d.classList.remove('active'));
+      if(dots[i]) dots[i].classList.add('active');
+    }
+  });
+},{threshold:.5});
+pages.forEach(p=>obs2.observe(p));
+
+// Reveal
+const reveals=document.querySelectorAll('.reveal');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+},{threshold:.1});
+reveals.forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
