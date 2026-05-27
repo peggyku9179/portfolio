@@ -61,6 +61,14 @@ footer{border-top:1px solid rgba(26,23,20,.08);padding:1.2rem 2.5rem;display:fle
   .contact-wrap{grid-template-columns:1fr;gap:3rem;}
   footer{padding:1rem 1.5rem;}
 }
+
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(247,243,237,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(26,23,20,.08); }
+  .nav-back { font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2a2420;text-decoration:none;opacity:.45;transition:opacity .3s; }
+  .nav-back:hover { opacity:1; }
+  .nav-logo { font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#1a1714;text-decoration:none; }
+  .nav-right { display:flex;gap:1.5rem; }
+  .nav-right a { font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2a2420;opacity:.45;text-decoration:none;transition:opacity .25s; }
+  .nav-right a:hover { opacity:1; }
 </style>
 </head>
 <body>
@@ -71,6 +79,11 @@ footer{border-top:1px solid rgba(26,23,20,.08);padding:1.2rem 2.5rem;display:fle
 <nav>
   <a class="nav-back" href="index.html">← 首頁</a>
   <a class="nav-logo" href="index.html">Peggy Ku</a>
+  <div class="nav-right">
+    <a href="portfolio.html">完整作品集</a>
+    <a href="about.html">關於我</a>
+    <a href="exchange.html">交換經歷</a>
+  </div>
 </nav>
 
 <main class="main">

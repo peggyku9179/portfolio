@@ -153,6 +153,14 @@ footer{background:#522D12;padding:1.5rem 2.5rem;display:flex;justify-content:spa
   nav{padding:1rem 1.5rem;}
   .page-counter{display:none;}
 }
+
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(247,243,237,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(26,23,20,.08); }
+  .nav-back { font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2a2420;text-decoration:none;opacity:.45;transition:opacity .3s; }
+  .nav-back:hover { opacity:1; }
+  .nav-logo { font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#1a1714;text-decoration:none; }
+  .nav-right { display:flex;gap:1.5rem; }
+  .nav-right a { font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2a2420;opacity:.45;text-decoration:none;transition:opacity .25s; }
+  .nav-right a:hover { opacity:1; }
 </style>
 </head>
 <body>
@@ -161,8 +169,13 @@ footer{background:#522D12;padding:1.5rem 2.5rem;display:flex;justify-content:spa
 <div class="cursor-ring" id="cursorRing"></div>
 
 <nav>
-  <a class="nav-back" href="portfolio.html">← 返回作品集</a>
+  <a class="nav-back" href="index.html">← 首頁</a>
   <a class="nav-logo" href="index.html">Peggy Ku</a>
+  <div class="nav-right">
+    <a href="portfolio.html">完整作品集</a>
+    <a href="about.html">關於我</a>
+    <a href="contact.html">聯絡</a>
+  </div>
 </nav>
 
 <div class="page-counter" id="pageCounter"></div>
@@ -192,7 +205,7 @@ footer{background:#522D12;padding:1.5rem 2.5rem;display:flex;justify-content:spa
   <div class="bg-layout">
     <div class="reveal">
       <h2 class="section-title">Project<br>Background</h2>
-      <p class="body-text">本專案為某國際汽車輪胎品牌之 AI Agent 設定案例，目標是協助經銷商第一線人員快速取得產品資訊，並降低短影音內容製作門檻。</p>
+      <p class="body-text">本專案為國際汽車輪胎品牌之 AI Agent 設定案例，目標是協助經銷商第一線人員快速取得產品資訊，並降低短影音內容製作門檻。</p>
       <p class="body-text">專案需求涵蓋 AI 客服角色設定、品牌知識庫建置，以及針對短影音腳本生成的 Agent 功能模組設計。</p>
     </div>
     <div class="reveal">

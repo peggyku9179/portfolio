@@ -39,7 +39,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 /* TICKER */
 .ticker-wrap{position:fixed;bottom:0;left:0;right:0;z-index:500;border-top:1px solid rgba(26,23,20,.1);overflow:hidden;background:rgba(247,243,237,.92);height:26px;display:flex;align-items:center;}
 .ticker{display:flex;white-space:nowrap;animation:ticker 24s linear infinite;}
-.ticker-item{font-size:.4rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(26,23,20,.28);padding:0 2.5rem;}
+.ticker-item{font-size:14px;letter-spacing:.25em;text-transform:uppercase;color:rgba(26,23,20,.28);padding:0 2.5rem;}
 .ticker-sep{color:var(--rust);margin:0 .5rem;}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
@@ -79,7 +79,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .win-dot.r{background:var(--rust);}
 .win-dot.y{background:var(--sand);}
 .win-dot.g{background:var(--sage);}
-.win-bar-title{flex:1;text-align:center;font-size:.38rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,23,20,.3);}
+.win-bar-title{flex:1;text-align:center;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(26,23,20,.3);}
 
 /* IMAGE FILL */
 .win-img{position:relative;overflow:hidden;}
@@ -89,9 +89,9 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .win-card:hover .win-overlay{opacity:1;}
 .win-label{position:absolute;bottom:0;left:0;right:0;padding:.85rem 1rem;opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease;}
 .win-card:hover .win-label{opacity:1;transform:translateY(0);}
-.win-label-cat{font-size:.36rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:.25rem;}
-.win-label-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:#fff;line-height:1.1;margin-bottom:.4rem;}
-.win-label-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.38rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);text-decoration:none;border-bottom:1px solid rgba(212,184,150,.35);padding-bottom:.08rem;transition:gap .2s;}
+.win-label-cat{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--sand);margin-bottom:.25rem;}
+.win-label-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:.4rem;}
+.win-label-link{display:inline-flex;align-items:center;gap:.3rem;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);text-decoration:none;border-bottom:1px solid rgba(212,184,150,.35);padding-bottom:.08rem;transition:gap .2s;}
 .win-label-link:hover{gap:.55rem;}
 
 /* HORIZONTAL CARD (about) */
@@ -101,20 +101,20 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .win-card:hover .win-horizontal .win-side-img img{transform:scale(1.04);}
 .win-horizontal .win-side-content{flex:1;display:flex;flex-direction:column;}
 .win-side-body{padding:1.1rem 1.3rem;flex:1;display:flex;flex-direction:column;justify-content:center;}
-.win-side-cat{font-size:.38rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);margin-bottom:.35rem;}
-.win-side-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--ink);line-height:1;margin-bottom:.6rem;}
-.win-side-desc{font-size:.5rem;line-height:1.9;color:var(--deep);opacity:.6;margin-bottom:.8rem;}
-.win-side-link{display:inline-flex;align-items:center;gap:.3rem;font-size:.4rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.28);padding-bottom:.08rem;transition:gap .2s;width:fit-content;}
+.win-side-cat{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);margin-bottom:.35rem;}
+.win-side-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--ink);line-height:1;margin-bottom:.6rem;}
+.win-side-desc{font-size:15px;line-height:1.9;color:var(--deep);opacity:.6;margin-bottom:.8rem;}
+.win-side-link{display:inline-flex;align-items:center;gap:.3rem;font-size:14px;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.28);padding-bottom:.08rem;transition:gap .2s;width:fit-content;}
 .win-side-link:hover{gap:.55rem;}
 
 /* DECO OBJECTS */
 .deco-toggle{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(26,23,20,.12);padding:.38rem .7rem;background:rgba(247,243,237,.9);}
 .deco-toggle-pill{width:26px;height:14px;background:rgba(26,23,20,.07);border-radius:999px;position:relative;border:1px solid rgba(26,23,20,.1);}
 .deco-toggle-pill::after{content:'';position:absolute;left:2px;top:2px;width:9px;height:9px;background:var(--rust);border-radius:50%;}
-.deco-toggle-txt{font-size:.36rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(26,23,20,.3);}
-.deco-folder{text-align:center;font-size:.36rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(26,23,20,.18);}
+.deco-toggle-txt{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:rgba(26,23,20,.3);}
+.deco-folder{text-align:center;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:rgba(26,23,20,.18);}
 .deco-folder svg{width:36px;height:36px;display:block;margin:0 auto .25rem;}
-.deco-ticker-mini{font-size:.36rem;letter-spacing:.1em;color:rgba(26,23,20,.15);border:1px solid rgba(26,23,20,.1);padding:.42rem .9rem;white-space:nowrap;overflow:hidden;width:280px;}
+.deco-ticker-mini{font-size:13px;letter-spacing:.1em;color:rgba(26,23,20,.15);border:1px solid rgba(26,23,20,.1);padding:.42rem .9rem;white-space:nowrap;overflow:hidden;width:280px;}
 
 /* LOADER */
 .loader{position:fixed;inset:0;z-index:9999;background:var(--cream);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.8rem;transition:opacity .6s ease,visibility .6s;}
@@ -219,7 +219,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       <div class="win-label">
         <p class="win-label-cat">AI Application</p>
         <p class="win-label-title">AI 相關專案</p>
-        <a class="win-label-link" href="portfolio.html#ai">查看詳情 →</a>
+        <a class="win-label-link" href="ai-case.html">查看詳情 →</a>
       </div>
     </div>
   </div>

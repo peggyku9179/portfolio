@@ -3,111 +3,602 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Peggy Ku — Works</title>
+<title>Peggy Ku — Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Noto+Serif+TC:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #f7f3ed;
+  --cream: #f0ebe1;
   --ink: #1a1714;
-  --rust: #B87229;
+  --rust: #c94f2a;
   --sage: #6b8c6e;
   --sand: #d4b896;
-  --fog: #ede8de;
+  --fog: #e8e2d9;
   --deep: #2a2420;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;font-size:12px;}
-body{background:var(--cream);color:var(--ink);font-family:'Space Mono',monospace;font-size:12px;overflow-x:hidden;cursor:none;}
 
-.cursor{position:fixed;width:10px;height:10px;background:var(--rust);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .15s,height .15s;}
-.cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rust);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--rust);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.2s, height 0.2s;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--rust);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, width 0.3s, height 0.3s, opacity 0.3s;
+  opacity: 0.5;
+}
+body:hover .cursor { opacity: 1; }
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.4;
+}
+
+
+  .hero-tagline {
+    font-size: 0.65rem; letter-spacing: 0.08em; line-height: 1.9;
+    color: var(--deep); opacity: 0.55;
+    max-width: 340px;
+    margin-top: 1.2rem;
+    opacity: 0; animation: fadeIn 0.9s ease forwards 1s;
+  }
+  .hero-about-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none;
+    border-bottom: 1px solid rgba(26,23,20,0.3);
+    padding-bottom: 0.2rem;
+    transition: gap 0.3s, border-color 0.3s;
+    opacity: 0; animation: fadeIn 0.9s ease forwards 1.1s;
+  }
+  .hero-about-btn:hover { gap: 0.8rem; border-color: var(--rust); color: var(--rust); }
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(247,243,237,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(26,23,20,.08);}
-.nav-back{font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .3s;}
-.nav-back:hover{opacity:1;}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:var(--ink);text-decoration:none;}
-.nav-links{display:flex;gap:1.5rem;}
-.nav-links a{font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.35;text-decoration:none;transition:opacity .25s;}
-.nav-links a:hover{opacity:1;}
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  mix-blend-mode: multiply;
+}
+.nav-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink); text-decoration: none; opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.nav-links a:hover { opacity: 1; }
 
 /* HERO */
-.hero{padding:8rem 2.5rem 4rem;border-bottom:2px solid var(--ink);position:relative;overflow:hidden;}
-.hero-label{font-size:15px;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;}
-.hero-title{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:900;line-height:.9;color:var(--ink);letter-spacing:-.02em;margin-bottom:1.5rem;}
-.hero-title em{font-style:italic;color:var(--rust);}
-.hero-desc{font-size:15px;line-height:2;letter-spacing:.06em;color:var(--deep);opacity:.55;max-width:480px;}
-.hero-bg{position:absolute;right:-1rem;bottom:-2rem;font-family:'Playfair Display',serif;font-size:18vw;font-weight:900;font-style:italic;color:rgba(26,23,20,.04);line-height:1;pointer-events:none;}
-
-/* CATEGORY */
-.category{padding:5rem 2.5rem 0;}
-.category-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem;}
-.category-pill{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid var(--ink);border-radius:999px;padding:.9rem 2rem;flex-shrink:0;}
-.category-pill-en{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.2rem;}
-.category-pill-zh{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1;}
-.category-line{flex:1;height:1px;background:rgba(26,23,20,.12);}
-
-/* CASE STUDY */
-.cases{display:flex;flex-direction:column;gap:1px;background:rgba(26,23,20,.1);margin-bottom:4rem;}
-.case{background:var(--cream);display:grid;grid-template-columns:1fr 1.8fr;gap:0;}
-.case.reverse{grid-template-columns:1.8fr 1fr;}
-.case-info{padding:3rem;border-right:1px solid rgba(26,23,20,.08);}
-.case.reverse .case-info{border-right:none;border-left:1px solid rgba(26,23,20,.08);order:2;}
-.case-num{font-size:12px;letter-spacing:.25em;color:var(--rust);margin-bottom:.75rem;}
-.case-brand{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--ink);line-height:1;margin-bottom:.5rem;}
-.case-industry{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:1.5rem;}
-.case-role-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.5rem;}
-.case-role-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.5rem;}
-.case-role-tag{font-size:12px;letter-spacing:.08em;padding:.25rem .65rem;border:1px solid rgba(26,23,20,.12);color:var(--deep);border-radius:999px;}
-.case-desc-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:.5rem;}
-.case-desc{font-size:15px;line-height:2;letter-spacing:.04em;color:var(--deep);opacity:.65;margin-bottom:1.5rem;}
-.case-link{display:inline-flex;align-items:center;gap:.4rem;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.3);padding-bottom:.1rem;transition:gap .2s;}
-.case-link:hover{gap:.7rem;}
-.case-link+.case-link{margin-left:1.5rem;}
-
-.case-visual{padding:3rem;display:flex;flex-direction:column;justify-content:center;background:var(--fog);}
-.case.reverse .case-visual{order:1;background:var(--fog);}
-.case-visual-num{font-family:'Playfair Display',serif;font-size:6rem;font-weight:900;color:rgba(26,23,20,.06);line-height:1;margin-bottom:1rem;}
-.case-visual-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.3;margin-bottom:.5rem;}
-.case-visual-stat{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;}
-.case-visual-tools{display:flex;flex-wrap:wrap;gap:.4rem;}
-.case-visual-tool{font-size:12px;letter-spacing:.1em;padding:.2rem .55rem;background:rgba(26,23,20,.06);color:var(--deep);border-radius:2px;}
-
-/* AI SECTION */
-.ai-case{background:var(--ink);padding:3rem;color:var(--cream);margin-bottom:4rem;}
-.ai-case-label{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--sand);margin-bottom:.75rem;}
-.ai-case-brand{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--cream);line-height:1;margin-bottom:.5rem;}
-.ai-case-industry{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,225,.3);margin-bottom:2rem;}
-.ai-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
-.ai-item-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin-bottom:.5rem;}
-.ai-item-value{font-size:15px;line-height:1.9;color:rgba(240,235,225,.65);}
-.ai-link{display:inline-flex;align-items:center;gap:.4rem;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);text-decoration:none;border-bottom:1px solid rgba(212,184,150,.3);padding-bottom:.1rem;transition:gap .2s;}
-.ai-link:hover{gap:.7rem;}
-
-/* FOOTER */
-footer{border-top:1px solid rgba(26,23,20,.1);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:12px;letter-spacing:.15em;color:var(--deep);opacity:.3;}
-.footer-nav{display:flex;gap:1.5rem;}
-.footer-nav a{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.35;transition:opacity .25s;}
-.footer-nav a:hover{opacity:1;}
-
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal.visible{opacity:1;transform:none;}
-.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal-left.visible{opacity:1;transform:none;}
-.reveal-right{opacity:0;transform:translateX(30px);transition:opacity .8s ease,transform .8s ease;}
-.reveal-right.visible{opacity:1;transform:none;}
-
-@media(max-width:900px){
-  nav{padding:1rem 1.5rem;}
-  .hero{padding:7rem 1.5rem 3rem;}
-  .category{padding:4rem 1.5rem 0;}
-  .case{grid-template-columns:1fr!important;}
-  .case-info{border-right:none!important;border-left:none!important;order:2!important;}
-  .case-visual{order:1!important;}
-  .ai-grid{grid-template-columns:1fr;}
-  footer{padding:1.2rem 1.5rem;flex-direction:column;gap:.5rem;text-align:center;}
+.hero {
+  min-height: 100vh;
+  padding: 6rem 2.5rem 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 0;
+  position: relative;
+  overflow: hidden;
 }
+
+.hero-top-left {
+  grid-column: 1; grid-row: 1;
+  padding-top: 4rem;
+}
+
+.hero-label {
+  font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 1.5rem;
+  opacity: 0; animation: fadeIn 0.8s ease forwards 0.3s;
+}
+
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(5rem, 10vw, 9rem);
+  font-weight: 900;
+  line-height: 0.85;
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  opacity: 0; animation: slideUp 0.9s ease forwards 0.5s;
+}
+
+.hero-name span {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--rust);
+}
+
+.hero-top-right {
+  grid-column: 2; grid-row: 1;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-bottom: 1rem;
+  opacity: 0; animation: fadeIn 0.9s ease forwards 0.8s;
+}
+
+.hero-desc {
+  font-size: 0.65rem; line-height: 2.2; letter-spacing: 0.08em;
+  color: var(--deep); opacity: 0.7;
+  max-width: 280px; margin-left: auto;
+  text-align: right;
+}
+
+.hero-divider {
+  grid-column: 1 / -1; grid-row: 2;
+  height: 1px; background: var(--ink);
+  margin: 2rem 0;
+  opacity: 0; animation: scaleX 0.8s ease forwards 1s;
+  transform-origin: left;
+}
+
+.hero-bottom {
+  grid-column: 1 / -1; grid-row: 3;
+  display: flex; justify-content: space-between; align-items: flex-end;
+  padding-top: 1rem;
+  opacity: 0; animation: fadeIn 0.9s ease forwards 1.2s;
+}
+
+.hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.hero-tag {
+  font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--ink);
+  color: var(--ink); opacity: 0.5;
+  transition: all 0.3s;
+}
+.hero-tag:hover { background: var(--ink); color: var(--cream); opacity: 1; }
+
+.hero-scroll-text {
+  font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink); opacity: 0.3;
+  writing-mode: vertical-rl;
+}
+
+/* BIG NUMBER BG */
+.hero-bg-num {
+  position: absolute;
+  bottom: -2rem; right: -1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 28vw; font-weight: 900;
+  color: var(--fog);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: -1;
+}
+
+/* SECTION STYLES */
+.section { padding: 5rem 2.5rem; position: relative; }
+.section.alt { background: var(--fog); }
+
+.section-marker {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 3rem;
+}
+.section-marker-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 4rem; font-weight: 900;
+  color: var(--sand); line-height: 1;
+}
+.section-marker-text {}
+.section-marker-label {
+  font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 0.3rem;
+}
+.section-marker-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 700; line-height: 1;
+  color: var(--ink);
+}
+
+/* WORK CARDS — ASYMMETRIC GRID */
+.work-asymmetric {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(26,23,20,0.1);
+  margin-bottom: 1px;
+}
+
+.work-asymmetric .card:nth-child(1) { grid-column: 1 / 3; }
+.work-asymmetric .card:nth-child(2) { grid-column: 3; }
+.work-asymmetric .card:nth-child(3) { display: none; }
+
+.work-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(26,23,20,0.1);
+}
+
+.card {
+  background: var(--cream);
+  border: 1px solid rgba(26,23,20,0.12);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.card.accent-rust { border-top: 3px solid var(--rust); }
+.card.accent-sage { border-top: 3px solid var(--sage); }
+.card.accent-sand { border-top: 3px solid var(--sand); }
+
+.card-industry {
+  font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 0.75rem;
+}
+.card-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 700; line-height: 1.1;
+  color: var(--ink); margin-bottom: 1rem;
+}
+.card-desc {
+  font-size: 0.6rem; line-height: 2; letter-spacing: 0.05em;
+  color: var(--deep); opacity: 0.65; margin-bottom: 1.5rem;
+}
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+.card-tag {
+  font-size: 0.5rem; letter-spacing: 0.1em;
+  padding: 0.25rem 0.6rem;
+  background: var(--fog);
+  color: var(--deep); opacity: 0.8;
+}
+.card-link {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--rust); text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, gap 0.3s;
+}
+.card-link:hover { border-color: var(--rust); gap: 0.7rem; }
+
+.card-full { grid-column: 1 / -1; }
+
+/* EXHIBITION */
+.exhibition-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.8fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.exhibition-info {}
+.exhibition-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem; font-weight: 900;
+  line-height: 0.9; color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.exhibition-title em { font-style: italic; color: var(--rust); display: block; }
+
+.exhibition-meta {
+  font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 2rem;
+}
+
+.exhibition-desc {
+  font-size: 0.65rem; line-height: 2.2; letter-spacing: 0.05em;
+  color: var(--deep); opacity: 0.7; margin-bottom: 2rem;
+}
+
+.stats-row { display: flex; gap: 2rem; margin-bottom: 2rem; }
+.stat {}
+.stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem; font-weight: 900;
+  color: var(--rust); line-height: 1;
+}
+.stat-l {
+  font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--deep); opacity: 0.5; margin-top: 0.25rem;
+}
+
+.exhibition-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0.5rem;
+}
+.exhibition-photos img {
+  width: 100%; object-fit: cover; cursor: pointer;
+  transition: opacity 0.3s;
+}
+.exhibition-photos img:hover { opacity: 0.85; }
+.exhibition-photos img:nth-child(1) { grid-column: 1 / -1; aspect-ratio: 16/7; object-position: center top; }
+.exhibition-photos img:nth-child(2),
+.exhibition-photos img:nth-child(3),
+.exhibition-photos img:nth-child(4),
+.exhibition-photos img:nth-child(5) { aspect-ratio: 1; }
+.exhibition-photos img:nth-child(6),
+.exhibition-photos img:nth-child(7) { aspect-ratio: 4/3; }
+
+/* 小事報 */
+.shiaobao-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.shiaobao-visual {
+  background: var(--ink);
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.shiaobao-visual::before {
+  content: '曾\A文\A溪';
+  white-space: pre;
+  position: absolute;
+  right: 1rem; top: 1rem;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 4rem; font-weight: 700;
+  color: rgba(255,255,255,0.06);
+  line-height: 1.1;
+}
+.shiaobao-label {
+  font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--sand); margin-bottom: 1rem;
+}
+.shiaobao-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem; font-weight: 900;
+  color: var(--cream); line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.shiaobao-sub {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 1rem; color: var(--sand);
+  margin-bottom: 2rem;
+}
+.shiaobao-route {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.55rem; letter-spacing: 0.1em;
+  color: rgba(240,235,225,0.6);
+}
+.route-dot { width: 6px; height: 6px; background: var(--rust); border-radius: 50%; flex-shrink: 0; }
+.route-line { flex: 1; height: 1px; background: rgba(255,255,255,0.15); }
+
+.shiaobao-info {}
+.shiaobao-info .card-desc { font-size: 0.65rem; }
+
+/* AI */
+.ai-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.ai-main {
+  background: var(--ink);
+  padding: 3rem;
+  color: var(--cream);
+}
+.ai-main .card-industry { color: var(--sand); }
+.ai-main .card-brand { color: var(--cream); font-size: 2rem; }
+.ai-main .card-desc { color: rgba(240,235,225,0.6); }
+
+.ai-details {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.ai-detail-card {
+  background: var(--cream);
+  border: 1px solid rgba(26,23,20,0.12);
+  padding: 1.5rem 2rem;
+}
+.ai-detail-label {
+  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--rust); margin-bottom: 0.75rem;
+}
+.ai-detail-value {
+  font-size: 0.6rem; line-height: 2; letter-spacing: 0.05em;
+  color: var(--deep); opacity: 0.7;
+}
+
+/* PERSONAL */
+.personal-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.personal-card {
+  padding: 2.5rem;
+  border: 1px solid rgba(26,23,20,0.12);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.personal-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 6px 6px 0 var(--sage);
+}
+.personal-badge {
+  display: inline-block;
+  font-size: 0.45rem; letter-spacing: 0.25em; text-transform: uppercase;
+  background: var(--sage); color: var(--cream);
+  padding: 0.25rem 0.7rem; margin-bottom: 1.2rem;
+}
+.personal-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; font-weight: 700; line-height: 1;
+  color: var(--ink); margin-bottom: 0.5rem;
+}
+.personal-handle {
+  font-size: 0.55rem; letter-spacing: 0.1em; color: var(--deep);
+  opacity: 0.4; margin-bottom: 1rem;
+}
+.personal-desc {
+  font-size: 0.6rem; line-height: 2; color: var(--deep);
+  opacity: 0.65; margin-bottom: 1.5rem;
+}
+
+/* CONTACT */
+.contact-section {
+  padding: 6rem 2.5rem;
+  background: var(--ink);
+  color: var(--cream);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-section::before {
+  content: 'PEGGY';
+  position: absolute;
+  bottom: -3rem; left: -1rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 22vw; font-weight: 900;
+  color: rgba(255,255,255,0.03);
+  line-height: 1; pointer-events: none;
+}
+
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+}
+
+.contact-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.5rem, 7vw, 6rem);
+  font-weight: 900; line-height: 0.9;
+  color: var(--cream); margin-bottom: 2rem;
+}
+.contact-title em { font-style: italic; color: var(--rust); }
+
+.contact-links { display: flex; flex-direction: column; gap: 1rem; }
+.contact-link {
+  display: flex; align-items: center; gap: 1rem;
+  font-size: 0.6rem; letter-spacing: 0.15em;
+  color: rgba(240,235,225,0.5); text-decoration: none;
+  transition: color 0.3s;
+}
+.contact-link:hover { color: var(--cream); }
+.contact-link-icon {
+  width: 28px; height: 28px; border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6rem; flex-shrink: 0;
+  transition: background 0.3s;
+}
+.contact-link:hover .contact-link-icon { background: var(--rust); border-color: var(--rust); }
+
+.contact-right { text-align: right; }
+.contact-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.85rem; font-style: italic;
+  color: rgba(240,235,225,0.3); margin-bottom: 1rem;
+}
+.contact-skills {
+  font-size: 0.55rem; letter-spacing: 0.15em;
+  color: rgba(240,235,225,0.25); line-height: 2.5; text-transform: uppercase;
+}
+
+footer {
+  background: var(--deep);
+  padding: 1.2rem 2.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy { font-size: 0.5rem; letter-spacing: 0.15em; color: rgba(240,235,225,0.2); }
+.footer-role { font-size: 0.5rem; letter-spacing: 0.15em; color: rgba(240,235,225,0.2); text-transform: uppercase; }
+
+/* LIGHTBOX */
+.lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9990; align-items: center; justify-content: center; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+.lightbox-close { position: absolute; top: 2rem; right: 2rem; background: none; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); padding: 0.5rem 1rem; font-size: 0.55rem; letter-spacing: 0.15em; cursor: pointer; font-family: 'Space Mono', monospace; transition: all 0.3s; }
+.lightbox-close:hover { border-color: white; color: white; }
+
+/* DISCLAIMER */
+.disclaimer {
+  font-size: 0.48rem; letter-spacing: 0.08em; color: var(--deep);
+  opacity: 0.35; line-height: 1.8; margin-top: 2rem;
+  padding-top: 1rem; border-top: 1px solid rgba(26,23,20,0.1);
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleX { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-left.visible { opacity: 1; transform: none; }
+.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal-right.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-top-right { margin-top: 1rem; }
+  .hero-top-right .hero-desc { margin-left: 0; text-align: left; }
+  .work-asymmetric { grid-template-columns: 1fr; }
+  .work-asymmetric .card:nth-child(2) { grid-row: auto; }
+  .work-row { grid-template-columns: 1fr; }
+  .exhibition-layout, .shiaobao-layout, .ai-layout, .personal-layout, .contact-layout { grid-template-columns: 1fr; }
+  nav { padding: 1rem 1.5rem; }
+  .section { padding: 4rem 1.5rem; }
+  .hero { padding: 5rem 1.5rem 3rem; }
+  .hero-bg-num { font-size: 40vw; }
+  .contact-section { padding: 4rem 1.5rem; }
+  footer { padding: 1rem 1.5rem; }
+}
+
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(247,243,237,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(26,23,20,.08); }
+  .nav-back { font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2a2420;text-decoration:none;opacity:.45;transition:opacity .3s; }
+  .nav-back:hover { opacity:1; }
+  .nav-logo { font-family:'Playfair Display',serif;font-size:18px;font-weight:900;color:#1a1714;text-decoration:none; }
+  .nav-right { display:flex;gap:1.5rem; }
+  .nav-right a { font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#2a2420;opacity:.45;text-decoration:none;transition:opacity .25s; }
+  .nav-right a:hover { opacity:1; }
 </style>
 </head>
 <body>
@@ -118,250 +609,424 @@ footer{border-top:1px solid rgba(26,23,20,.1);padding:1.5rem 2.5rem;display:flex
 <nav>
   <a class="nav-back" href="index.html">← 首頁</a>
   <a class="nav-logo" href="index.html">Peggy Ku</a>
-  <div class="nav-links">
+  <div class="nav-right">
     <a href="about.html">關於我</a>
     <a href="exchange.html">交換經歷</a>
+    <a href="contact.html">聯絡</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-label">Selected Works · 作品選輯</p>
-  <h1 class="hero-title">Content.<br>Video.<br><em>AI.</em></h1>
-  <p class="hero-desc">跨產業品牌內容製作，涵蓋社群圖文、短影音剪輯與 AI 工具應用。每個專案皆獨立執行設計與剪輯工作。</p>
-  <div class="hero-bg" aria-hidden="true">Works</div>
+  <div class="hero-top-left">
+    <p class="hero-label">Marketing Portfolio · 2025–2026</p>
+    <h1 class="hero-name">
+      Peggy
+      <span>Ku.</span>
+    </h1>
+  </div>
+  <div class="hero-top-right">
+    <p class="hero-desc">
+      行銷內容創作者<br>
+      社群策略 · 影像製作<br>
+      AI 工具應用 · 活動執行
+    </p>
+  </div>
+  <div class="hero-divider"></div>
+  <div class="hero-bottom">
+    <div class="hero-tags">
+      <span class="hero-tag">Social Media</span>
+      <span class="hero-tag">Short-form Video</span>
+      <span class="hero-tag">Copywriting</span>
+      <span class="hero-tag">AI Application</span>
+      <span class="hero-tag">Event Planning</span>
+    </div>
+    <p class="hero-scroll-text">Scroll</p>
+  </div>
+  <div class="hero-bg-num" aria-hidden="true">26</div>
 </section>
 
-<!-- ── 內容製作 ── -->
-<div class="category reveal">
-  <div class="category-header">
-    <div class="category-pill">
-      <span class="category-pill-en">Content Creation</span>
-      <span class="category-pill-zh">內容製作</span>
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="section-marker reveal">
+    <div class="section-marker-num">01</div>
+    <div class="section-marker-text">
+      <p class="section-marker-label">品牌作品 · Selected Work</p>
+      <h2 class="section-marker-title">作品選輯</h2>
     </div>
-    <span class="category-line"></span>
   </div>
 
-  <div class="cases">
 
-    <!-- 農業局 -->
-    <div class="case reveal-left">
-      <div class="case-info">
-        <p class="case-num">01</p>
-        <h2 class="case-brand">高雄市政府<br>農業局</h2>
-        <p class="case-industry">Government · Social Media · Facebook</p>
-        <p class="case-role-label">我的角色</p>
-        <div class="case-role-tags">
-          <span class="case-role-tag">社群文案撰寫</span>
-          <span class="case-role-tag">圖文設計</span>
-          <span class="case-role-tag">限時動態設計</span>
-        </div>
-        <p class="case-desc-label">專案說明</p>
-        <p class="case-desc">負責高雄市政府農業局官方粉絲專頁的社群內容規劃與執行。在兩個月的執行期間，獨立完成貼文文案撰寫、圖文視覺設計及限時動態製作，確保內容符合政府機關的品牌語氣，同時兼顧社群傳播效益。</p>
-        <a class="case-link" href="kaohsiung-works.html">查看作品 →</a>
+  <!-- 短影音 -->
+  <div class="work-category reveal">
+    <div class="work-category-header">
+      <div class="work-category-pill">
+        <span class="work-category-en">Short-form Video</span>
+        <h3 class="work-category-title">短影音</h3>
       </div>
-      <div class="case-visual">
-        <div class="case-visual-num">4</div>
-        <p class="case-visual-label">執行期間</p>
-        <p class="case-visual-stat">2 個月<br>獨立執行</p>
-        <div class="case-visual-tools">
-          <span class="case-visual-tool">Photoshop</span>
-          <span class="case-visual-tool">Illustrator</span>
-          <span class="case-visual-tool">Canva</span>
+      <span class="work-category-dash"></span>
+    </div>
+    <div class="cards-grid">
+      <div class="card accent-sand reveal" style="transition-delay:0.05s">
+        <p class="card-industry">Fashion · Video Production</p>
+        <h3 class="card-brand">GU Taiwan</h3>
+        <p class="card-desc">到店執行拍攝、整理影片素材，負責短影音剪輯及腳本分鏡示意圖製作。</p>
+        <div class="card-tags">
+          <span class="card-tag">實地拍攝</span>
+          <span class="card-tag">影片剪輯</span>
+          <span class="card-tag">腳本分鏡</span>
         </div>
+        <a class="card-link" href="gu-works.html">查看全部影片 →</a>
+      </div>
+
+      <div class="card accent-sage reveal" style="transition-delay:0.1s">
+        <p class="card-industry">Food & Beverage</p>
+        <h3 class="card-brand">森永製果<br>台灣</h3>
+        <p class="card-desc">社群圖文設計及短影音製作，結合 AI 工具提升內容產出效率。</p>
+        <div class="card-tags">
+          <span class="card-tag">短影音剪輯</span>
+          <span class="card-tag">AI 輔助</span>
+        </div>
+        <a class="card-link" href="morinaga-works.html">查看全部影片 →</a>
+      </div>
+
+      <div class="card accent-rust reveal" style="transition-delay:0.15s">
+        <p class="card-industry">Healthcare · Dental</p>
+        <h3 class="card-brand">鼎極牙醫<br>× 隱適美</h3>
+        <p class="card-desc">牙醫診所與牙齒矯正品牌短影音製作，到店實拍、腳本分鏡與剪輯後製。</p>
+        <div class="card-tags">
+          <span class="card-tag">實地拍攝</span>
+          <span class="card-tag">影片剪輯</span>
+          <span class="card-tag">腳本分鏡</span>
+        </div>
+        <a class="card-link" href="https://www.instagram.com/reel/DWAyOSHgVkt/" target="_blank">觀看影片 →</a>
       </div>
     </div>
-
-    <!-- 森永製果 -->
-    <div class="case reverse reveal-right">
-      <div class="case-info">
-        <p class="case-num">02</p>
-        <h2 class="case-brand">森永製果<br>台灣</h2>
-        <p class="case-industry">Food & Beverage · Instagram · Short Video</p>
-        <p class="case-role-label">我的角色</p>
-        <div class="case-role-tags">
-          <span class="case-role-tag">社群圖文設計</span>
-          <span class="case-role-tag">短影音剪輯</span>
-          <span class="case-role-tag">AI 輔助創作</span>
-        </div>
-        <p class="case-desc-label">專案說明</p>
-        <p class="case-desc">同步負責森永製果台灣品牌的 Instagram 社群內容，三個月內共完成 5 支 Reels、6 張單圖設計（含多圖組）。結合 AI 工具輔助文案發想與素材生成，從視覺設計到影片剪輯皆獨立完成，維持品牌一致的視覺語言。</p>
-        <a class="case-link" href="morinaga-works.html">查看作品 →</a>
-      </div>
-      <div class="case-visual">
-        <div class="case-visual-num">5+</div>
-        <p class="case-visual-label">3 個月成果</p>
-        <p class="case-visual-stat">5 支 Reels<br>6 張圖文設計</p>
-        <div class="case-visual-tools">
-          <span class="case-visual-tool">Premiere Pro</span>
-          <span class="case-visual-tool">Canva</span>
-          <span class="case-visual-tool">AI 工具</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ── 影像製作 ── -->
-<div class="category reveal">
-  <div class="category-header">
-    <div class="category-pill">
-      <span class="category-pill-en">Video Production</span>
-      <span class="category-pill-zh">影像製作</span>
-    </div>
-    <span class="category-line"></span>
   </div>
 
-  <div class="cases">
-
-    <!-- GU -->
-    <div class="case reveal-left">
-      <div class="case-info">
-        <p class="case-num">03</p>
-        <h2 class="case-brand">GU Taiwan</h2>
-        <p class="case-industry">Fashion · Instagram Reels · Short Video</p>
-        <p class="case-role-label">我的角色</p>
-        <div class="case-role-tags">
-          <span class="case-role-tag">實地拍攝</span>
-          <span class="case-role-tag">影片剪輯</span>
-          <span class="case-role-tag">腳本分鏡</span>
-          <span class="case-role-tag">素材整理</span>
-        </div>
-        <p class="case-desc-label">專案說明</p>
-        <p class="case-desc">試用期三個月（2025.12－2026.03）內密集參與 GU 社群短影音製作，共完成 23 支影片剪輯、參與 10 次外拍。1月單月負責 12 支，佔當月總需求量 63%。逐步熟悉品牌短影音拍攝流程、畫面設計與剪輯節奏，能獨立完成完整製作流程。</p>
-        <a class="case-link" href="gu-works.html">查看部分影片 →</a>
+  <!-- 社群貼文 -->
+  <div class="work-category reveal">
+    <div class="work-category-header">
+      <div class="work-category-pill">
+        <span class="work-category-en">Social Media</span>
+        <h3 class="work-category-title">社群貼文</h3>
       </div>
-      <div class="case-visual">
-        <div class="case-visual-num">23</div>
-        <p class="case-visual-label">3 個月完成</p>
-        <p class="case-visual-stat">23 支影片<br>外拍 10 次</p>
-        <div class="case-visual-tools">
-          <span class="case-visual-tool">Premiere Pro</span>
-          <span class="case-visual-tool">實地拍攝</span>
+      <span class="work-category-dash"></span>
+    </div>
+    <div class="cards-grid cards-grid-single">
+      <div class="card accent-rust reveal" style="transition-delay:0.05s">
+        <p class="card-industry">Government · Social Media</p>
+        <h3 class="card-brand">高雄市政府<br>農業局</h3>
+        <p class="card-desc">負責官方粉絲專頁的社群內容規劃與執行，包含文案撰寫、圖文設計及限時動態視覺設計。</p>
+        <div class="card-tags">
+          <span class="card-tag">社群文案</span>
+          <span class="card-tag">圖文設計</span>
+          <span class="card-tag">限時動態</span>
         </div>
+        <a class="card-link" href="kaohsiung-works.html">查看全部作品 →</a>
       </div>
     </div>
-
-    <!-- 鼎極牙醫 -->
-    <div class="case reverse reveal-right">
-      <div class="case-info">
-        <p class="case-num">04</p>
-        <h2 class="case-brand">鼎極牙醫<br>× 隱適美</h2>
-        <p class="case-industry">Healthcare · Dental · Instagram Reels</p>
-        <p class="case-role-label">我的角色</p>
-        <div class="case-role-tags">
-          <span class="case-role-tag">實地拍攝</span>
-          <span class="case-role-tag">影片剪輯</span>
-          <span class="case-role-tag">腳本分鏡</span>
-        </div>
-        <p class="case-desc-label">專案說明</p>
-        <p class="case-desc">協助牙醫診所與隱適美品牌短影音製作，到現場執行拍攝素材收集，獨立完成素材整理與影片剪輯後製，使成品符合醫療品牌的專業形象。</p>
-        <a class="case-link" href="https://www.instagram.com/reel/DWAyOSHgVkt/" target="_blank">觀看影片 →</a>
-      </div>
-      <div class="case-visual">
-        <div class="case-visual-num">1</div>
-        <p class="case-visual-label">完成影片</p>
-        <p class="case-visual-stat">醫療品牌<br>短影音製作</p>
-        <div class="case-visual-tools">
-          <span class="case-visual-tool">Premiere Pro</span>
-          <span class="case-visual-tool">實地拍攝</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 聲寶 -->
-    <div class="case reveal-left">
-      <div class="case-info">
-        <p class="case-num">05</p>
-        <h2 class="case-brand">聲寶<br>SAMPO</h2>
-        <p class="case-industry">Electronics · Advertisement · Facebook</p>
-        <p class="case-role-label">我的角色</p>
-        <div class="case-role-tags">
-          <span class="case-role-tag">素材整理</span>
-          <span class="case-role-tag">廣告剪輯</span>
-          <span class="case-role-tag">後製輸出</span>
-        </div>
-        <p class="case-desc-label">專案說明</p>
-        <p class="case-desc">接收品牌提供的原始素材，獨立完成廣告影片的剪輯後製工作。依據品牌視覺規範與傳播需求進行剪輯，使成品在保有品牌調性的同時具備社群傳播效益。</p>
-        <a class="case-link" href="https://www.facebook.com/share/v/1J2aY3FQRZ/" target="_blank">觀看影片 →</a>
-      </div>
-      <div class="case-visual">
-        <div class="case-visual-num">1</div>
-        <p class="case-visual-label">廣告影片</p>
-        <p class="case-visual-stat">品牌廣告<br>獨立後製</p>
-        <div class="case-visual-tools">
-          <span class="case-visual-tool">Premiere Pro</span>
-          <span class="case-visual-tool">After Effects</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ── AI 應用 ── -->
-<div class="category reveal" style="padding-bottom:5rem;">
-  <div class="category-header">
-    <div class="category-pill">
-      <span class="category-pill-en">AI Application</span>
-      <span class="category-pill-zh">AI 應用</span>
-    </div>
-    <span class="category-line"></span>
   </div>
 
-  <div class="ai-case reveal">
-    <p class="ai-case-label">06 · AI Project</p>
-    <h2 class="ai-case-brand">某國際汽車輪胎品牌</h2>
-    <p class="ai-case-industry">Automotive · AI Customer Service · Knowledge Base</p>
-    <div class="ai-grid">
-      <div>
-        <p class="ai-item-label">專案背景</p>
-        <p class="ai-item-value">某國際汽車輪胎品牌，需要建置一套 AI 客服系統，讓門市人員能透過 AI 快速回應客戶詢問，維持品牌一致性的溝通方式。</p>
+  <!-- 廣告 -->
+  <div class="work-category reveal">
+    <div class="work-category-header">
+      <div class="work-category-pill">
+        <span class="work-category-en">Advertisement</span>
+        <h3 class="work-category-title">廣告</h3>
       </div>
-      <div>
-        <p class="ai-item-label">我負責的工作</p>
-        <p class="ai-item-value">建置 AI 客服知識庫，將品牌資訊結構化整理；撰寫 AI Agent 系統提示詞（Prompt Engineering），設計對話情境與回應邏輯。</p>
-      </div>
-      <div>
-        <p class="ai-item-label">核心原則</p>
-        <p class="ai-item-value">強調專業技術與車輛安全，避免價格競爭框架，透過 AI 建立品牌信任感，現已實際供門市客服使用。</p>
+      <span class="work-category-dash"></span>
+    </div>
+    <div class="cards-grid cards-grid-single">
+      <div class="card accent-sage reveal" style="transition-delay:0.05s">
+        <p class="card-industry">Electronics · Ad Production</p>
+        <h3 class="card-brand">聲寶 SAMPO</h3>
+        <p class="card-desc">接收品牌提供的素材，獨立完成廣告影片剪輯後製，使成品符合品牌視覺規範與傳播需求。</p>
+        <div class="card-tags">
+          <span class="card-tag">素材整理</span>
+          <span class="card-tag">影片剪輯</span>
+          <span class="card-tag">廣告後製</span>
+        </div>
+        <a class="card-link" href="https://www.facebook.com/share/v/1J2aY3FQRZ/" target="_blank">觀看影片 →</a>
       </div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem;">
-      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">Prompt Engineering</span>
-      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">AI Agent 設計</span>
-      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">知識庫建置</span>
-      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">品牌溝通策略</span>
+  </div>
+
+  <p class="disclaimer">* 本頁作品集所有影片及視覺素材均為展示用途，版權歸屬原品牌所有。All content is used for portfolio presentation purposes only. All rights belong to the respective brand owners.</p>
+</section>
+
+<!-- EXHIBITION -->
+<section class="section alt" id="exhibition">
+  <div class="section-marker reveal">
+    <div class="section-marker-num">02</div>
+    <div class="section-marker-text">
+      <p class="section-marker-label">影像製作 · Exhibition Project · 2024.05</p>
+      <h2 class="section-marker-title">畢業展覽</h2>
     </div>
-    <a class="ai-link" href="ai-case.html">← 返回頂部</a>
+  </div>
+
+  <div class="exhibition-layout">
+    <div class="exhibition-info reveal-left">
+      <h3 class="exhibition-title">Yi<br>Yi<br><em>Yi.</em></h3>
+      <p class="exhibition-meta">台北 · 2024.05 · 學生自主展覽</p>
+      <p class="exhibition-desc">50 人團隊自主籌辦的畢業展覽，橫跨台北兩大場地：商業複合空間 Woolloomooloo 與歷史場域剝皮寮。<br><br>擔任場地組，負責實地丈量、製作 1:30 比例實體模型、規劃展品空間配置與人員動線，並協調展品運輸計畫。</p>
+      <div class="stats-row">
+        <div class="stat"><p class="stat-n">50</p><p class="stat-l">人團隊</p></div>
+        <div class="stat"><p class="stat-n">2</p><p class="stat-l">展覽場地</p></div>
+        <div class="stat"><p class="stat-n">1:30</p><p class="stat-l">實體模型</p></div>
+      </div>
+      <div class="card-tags">
+        <span class="card-tag">場地丈量</span>
+        <span class="card-tag">空間規劃</span>
+        <span class="card-tag">比例模型</span>
+        <span class="card-tag">動線設計</span>
+        <span class="card-tag">運輸規劃</span>
+      </div>
+    </div>
+
+    <div class="exhibition-photos reveal-right">
+      <img src="IMG_7583.JPG" alt="展覽空間模型" onclick="openLightbox(this.src)">
+      <img src="IMG_7580.JPG" alt="剝皮寮145" onclick="openLightbox(this.src)">
+      <img src="IMG_7581.JPG" alt="剝皮寮147" onclick="openLightbox(this.src)">
+      <img src="IMG_7582.JPG" alt="剝皮寮149" onclick="openLightbox(this.src)">
+      <img src="IMG_7584.JPG" alt="空間模型全景" onclick="openLightbox(this.src)">
+      <img src="IMG_7585.JPG" alt="立體模型" onclick="openLightbox(this.src)">
+      <img src="IMG_7586.JPG" alt="平面規劃" onclick="openLightbox(this.src)">
+    </div>
+  </div>
+</section>
+
+<!-- 小事報 -->
+<section class="section" id="shiaobao">
+  <div class="section-marker reveal">
+    <div class="section-marker-num">03</div>
+    <div class="section-marker-text">
+      <p class="section-marker-label">活動策劃 · Community Project · 2022–2023</p>
+      <h2 class="section-marker-title">小事報</h2>
+    </div>
+  </div>
+
+  <div class="shiaobao-layout">
+    <div class="shiaobao-visual reveal-left">
+      <p class="shiaobao-label">Mattauw 大地藝術季 × 台南市文化局</p>
+      <h3 class="shiaobao-title">《小事報》<br>新聞編輯營</h3>
+      <p class="shiaobao-sub">曾文溪流域踏查</p>
+      <div class="shiaobao-route">
+        <span class="route-dot"></span>
+        <span>上游 · 達邦部落</span>
+        <span class="route-line"></span>
+        <span>中游 · 農業聚落</span>
+        <span class="route-line"></span>
+        <span>下游 · 出海口</span>
+        <span class="route-dot"></span>
+      </div>
+    </div>
+
+    <div class="shiaobao-info reveal-right">
+      <p class="card-industry" style="color:var(--rust); margin-bottom:1rem;">兩屆隊輔 · Education · Event</p>
+      <p class="card-desc" style="font-size:0.65rem; line-height:2.2;">
+        連續兩屆擔任《小事報》新聞編輯工作營隊輔，協助帶領國小學童走遍曾文溪全流域。透過身體力行的踏查方式，引導孩子用自己的視角記錄母親之河的故事。<br><br>
+        活動由台南市文化局主辦，結合 Mattauw 大地藝術季策展人共同發起，串聯曾文溪流域六所國小學童共同參與。
+      </p>
+      <div class="card-tags" style="margin-bottom:1.5rem;">
+        <span class="card-tag">活動隊輔</span>
+        <span class="card-tag">田野踏查</span>
+        <span class="card-tag">兒童引導</span>
+        <span class="card-tag">新聞編輯</span>
+        <span class="card-tag">兩屆參與</span>
+      </div>
+      <a class="card-link" href="https://today.line.me/tw/v3/article/yzX5rlE" target="_blank">查看活動報導 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- AI -->
+<section class="section alt" id="ai">
+  <div class="section-marker reveal">
+    <div class="section-marker-num">04</div>
+    <div class="section-marker-text">
+      <p class="section-marker-label">AI Project</p>
+      <h2 class="section-marker-title">AI 專案</h2>
+    </div>
+  </div>
+
+  <div class="ai-layout">
+    <div class="ai-main reveal-left">
+      <p class="card-industry">Automotive · AI Application</p>
+      <h3 class="card-brand">國際汽車輪胎品牌<br>AI 客服知識庫</h3>
+      <p class="card-desc">為國際汽車輪胎品牌建置 AI 客服知識庫，撰寫 AI Agent 系統提示詞，實現品牌一致性的自動化客戶溝通。強調專業技術與車輛安全，避免價格競爭框架。</p>
+      <div class="card-tags">
+        <span class="card-tag" style="background:rgba(255,255,255,0.1); color:var(--cream);">Prompt Engineering</span>
+        <span class="card-tag" style="background:rgba(255,255,255,0.1); color:var(--cream);">AI Agent 設計</span>
+        <span class="card-tag" style="background:rgba(255,255,255,0.1); color:var(--cream);">知識庫建置</span>
+      </div>
+      <a href="ai-case.html" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1.2rem;font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);text-decoration:none;border-bottom:1px solid rgba(212,184,150,.3);padding-bottom:.1rem;transition:gap .2s;">查看完整案例 →</a>
+    </div>
+
+    <div class="ai-details reveal-right">
+      <div class="ai-detail-card">
+        <p class="ai-detail-label">專案內容</p>
+        <p class="ai-detail-value">AI 客服機器人知識庫建置<br>品牌知識結構化整理<br>對話情境規劃設計</p>
+      </div>
+      <div class="ai-detail-card">
+        <p class="ai-detail-label">成果與方向</p>
+        <p class="ai-detail-value">完成系統提示詞撰寫<br>強調專業技術與車輛安全<br>可供門市客服實際使用</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL -->
+<section class="section" id="personal">
+  <div class="section-marker reveal">
+    <div class="section-marker-num">05</div>
+    <div class="section-marker-text">
+      <p class="section-marker-label">Personal Accounts</p>
+      <h2 class="section-marker-title">自媒體經營</h2>
+    </div>
+  </div>
+
+  <div class="personal-layout" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="personal-card reveal-left">
+      <span class="personal-badge">飾品創作</span>
+      <h3 class="personal-name">Warmshines</h3>
+      <p class="personal-handle">@warmshines</p>
+      <p class="personal-desc">自主經營飾品品牌，從商品拍攝、文案到視覺風格全程自主規劃，實踐品牌一致性的內容策略。</p>
+      <div class="card-tags" style="margin-bottom:1.5rem;">
+        <span class="card-tag">商品攝影</span>
+        <span class="card-tag">品牌視覺</span>
+        <span class="card-tag">社群經營</span>
+      </div>
+      <a class="card-link" href="https://www.instagram.com/warmshines" target="_blank">查看 Instagram →</a>
+    </div>
+
+    <div class="personal-card reveal" style="transition-delay:0.1s">
+      <span class="personal-badge">旅行攝影</span>
+      <h3 class="personal-name">Take a Rest<br>Travel</h3>
+      <p class="personal-handle">@take_a_rest_travel</p>
+      <p class="personal-desc">旅行攝影帳號，記錄各地旅行的影像視角與生活感，持續累積視覺敏銳度與個人風格。</p>
+      <div class="card-tags" style="margin-bottom:1.5rem;">
+        <span class="card-tag">旅行攝影</span>
+        <span class="card-tag">視覺風格</span>
+        <span class="card-tag">內容策展</span>
+      </div>
+      <a class="card-link" href="https://www.instagram.com/take_a_rest_travel" target="_blank">查看 Instagram →</a>
+    </div>
+
+    <div class="personal-card reveal-right">
+      <span class="personal-badge">日常 Vlog</span>
+      <h3 class="personal-name">Peggy<br>Daily Vlog</h3>
+      <p class="personal-handle">@peggy_dailyvlog</p>
+      <p class="personal-desc">YouTube 日常 vlog，記錄生活片段與日常感受，從拍攝到剪輯全程自主製作。</p>
+      <div class="card-tags" style="margin-bottom:1.5rem;">
+        <span class="card-tag">影片剪輯</span>
+        <span class="card-tag">日常紀錄</span>
+        <span class="card-tag">自主製作</span>
+      </div>
+      <a class="card-link" href="https://youtube.com/@peggy_dailyvlog" target="_blank">查看 YouTube →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-layout">
+    <div class="reveal-left">
+      <h2 class="contact-title">Let's<br><em>Work</em><br>Together.</h2>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:peggyku91@gmail.com">
+          <span class="contact-link-icon">@</span>
+          peggyku91@gmail.com
+        </a>
+        <a class="contact-link" href="https://www.linkedin.com/in/古姵蓁peggyku/" target="_blank">
+          <span class="contact-link-icon">in</span>
+          古姵蓁 Peggy Ku
+        </a>
+      </div>
+    </div>
+    <div class="contact-right reveal-right">
+      <p class="contact-tagline">"Content with intention."</p>
+      <p class="contact-skills">
+        Social Media<br>
+        Short-form Video<br>
+        AI Application<br>
+        Event Planning<br>
+        Copywriting
+      </p>
+    </div>
   </div>
 </div>
 
 <footer>
   <p class="footer-copy">© 2026 Peggy Ku · peggyku91@gmail.com</p>
-  <div class="footer-nav">
-    <a href="index.html">首頁</a>
-    <a href="about.html">關於我</a>
-    <a href="exchange.html">交換經歷</a>
-  </div>
+  <p class="footer-role">Marketing · Content · Video · AI · Event</p>
 </footer>
 
-<script>
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function animR(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);})();
-document.querySelectorAll('a').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';});
-});
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">CLOSE ✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
 
-const reveals=document.querySelectorAll('.reveal,.reveal-left,.reveal-right');
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-},{threshold:.1});
-reveals.forEach(el=>obs.observe(el));
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + 'px'; cursor.style.top = my + 'px'; });
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .card, .personal-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '56px'; ring.style.height = '56px'; ring.style.opacity = '0.3'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '36px'; ring.style.height = '36px'; ring.style.opacity = '0.5'; });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 80);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => obs.observe(el));
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Filter
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.card[data-type]').forEach(card => {
+        if (filter === 'all' || card.dataset.type.includes(filter)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+
 </script>
 </body>
 </html>
