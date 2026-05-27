@@ -16,8 +16,8 @@
   --deep: #2a2420;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { background: var(--cream); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 13px; overflow-x: hidden; cursor: none; }
+html { scroll-behavior: smooth; font-size: 12px; }
+body { background: var(--cream); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 12px; overflow-x: hidden; cursor: none; }
 
 .cursor { position: fixed; width: 12px; height: 12px; background: var(--rust); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; mix-blend-mode: multiply; }
 .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--rust); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s; opacity: 0.5; }
@@ -29,7 +29,7 @@ nav {
   background: rgba(247,243,237,0.92); backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(26,23,20,0.08);
 }
-.nav-back { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.5; transition: opacity 0.3s; }
+.nav-back { font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink); text-decoration: none; opacity: 0.5; transition: opacity 0.3s; }
 .nav-back:hover { opacity: 1; }
 .nav-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; letter-spacing: 0.05em; color: var(--ink); text-decoration: none; }
 
@@ -53,13 +53,13 @@ nav {
   line-height: 1; pointer-events: none;
 }
 
-.hero-label { font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rust); margin-bottom: 1rem; }
+.hero-label { font-size: 15px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rust); margin-bottom: 1rem; }
 .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 900; line-height: 0.9; color: var(--ink); }
 .hero-title em { font-style: italic; color: var(--rust); display: block; }
 
 .hero-right { text-align: right; }
 .hero-count { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: var(--sand); line-height: 1; }
-.hero-count-label { font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep); opacity: 0.4; margin-top: 0.5rem; }
+.hero-count-label { font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep); opacity: 0.4; margin-top: 0.5rem; }
 
 .roles-strip {
   display: flex;
@@ -68,12 +68,12 @@ nav {
 }
 .role-item {
   padding: 1rem 1.5rem; border-right: 1px solid rgba(26,23,20,0.1);
-  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep); opacity: 0.5;
+  font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--deep); opacity: 0.5;
 }
 .role-item:last-child { border-right: none; }
 
 .grid-section { padding: 4rem 2.5rem; }
-.grid-label { font-size: 0.5rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--deep); opacity: 0.4; margin-bottom: 2rem; }
+.grid-label { font-size: 15px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--deep); opacity: 0.4; margin-bottom: 2rem; }
 
 .reel-grid {
   display: grid;
@@ -129,17 +129,17 @@ nav {
 .reel-card:hover .play-btn { opacity: 1; }
 
 .reel-visual-label {
-  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 15px; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--deep); opacity: 0.4;
 }
 
 .reel-info { padding: 1.2rem 1.5rem; }
-.reel-num { font-size: 0.45rem; letter-spacing: 0.2em; color: var(--rust); margin-bottom: 0.4rem; }
+.reel-num { font-size: 12px; letter-spacing: 0.2em; color: var(--rust); margin-bottom: 0.4rem; }
 .reel-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
-.reel-type { font-size: 0.48rem; letter-spacing: 0.12em; color: var(--deep); opacity: 0.4; margin-bottom: 0.75rem; }
+.reel-type { font-size: 12px; letter-spacing: 0.12em; color: var(--deep); opacity: 0.4; margin-bottom: 0.75rem; }
 .reel-cta {
   display: inline-flex; align-items: center; gap: 0.4rem;
-  font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase;
+  font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
   color: var(--rust); transition: gap 0.3s;
 }
 .reel-card:hover .reel-cta { gap: 0.7rem; }
@@ -149,8 +149,8 @@ footer {
   padding: 1.2rem 2.5rem;
   display: flex; justify-content: space-between; align-items: center;
 }
-.footer-copy { font-size: 0.5rem; letter-spacing: 0.15em; color: var(--deep); opacity: 0.3; }
-.footer-back { font-size: 0.5rem; letter-spacing: 0.15em; color: var(--ink); text-decoration: none; text-transform: uppercase; opacity: 0.4; transition: opacity 0.3s; }
+.footer-copy { font-size: 15px; letter-spacing: 0.15em; color: var(--deep); opacity: 0.3; }
+.footer-back { font-size: 15px; letter-spacing: 0.15em; color: var(--ink); text-decoration: none; text-transform: uppercase; opacity: 0.4; transition: opacity 0.3s; }
 .footer-back:hover { opacity: 1; }
 
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }

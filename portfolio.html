@@ -16,34 +16,34 @@
   --deep: #2a2420;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--cream);color:var(--ink);font-family:'Space Mono',monospace;font-size:13px;overflow-x:hidden;cursor:none;}
+html{scroll-behavior:smooth;font-size:12px;}
+body{background:var(--cream);color:var(--ink);font-family:'Space Mono',monospace;font-size:12px;overflow-x:hidden;cursor:none;}
 
 .cursor{position:fixed;width:10px;height:10px;background:var(--rust);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .15s,height .15s;}
 .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rust);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(247,243,237,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(26,23,20,.08);}
-.nav-back{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .3s;}
+.nav-back{font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.45;transition:opacity .3s;}
 .nav-back:hover{opacity:1;}
 .nav-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:var(--ink);text-decoration:none;}
 .nav-links{display:flex;gap:1.5rem;}
-.nav-links a{font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.35;text-decoration:none;transition:opacity .25s;}
+.nav-links a{font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.35;text-decoration:none;transition:opacity .25s;}
 .nav-links a:hover{opacity:1;}
 
 /* HERO */
 .hero{padding:8rem 2.5rem 4rem;border-bottom:2px solid var(--ink);position:relative;overflow:hidden;}
-.hero-label{font-size:.5rem;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;}
+.hero-label{font-size:15px;letter-spacing:.3em;text-transform:uppercase;color:var(--rust);margin-bottom:1rem;}
 .hero-title{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,8vw,7rem);font-weight:900;line-height:.9;color:var(--ink);letter-spacing:-.02em;margin-bottom:1.5rem;}
 .hero-title em{font-style:italic;color:var(--rust);}
-.hero-desc{font-size:.6rem;line-height:2;letter-spacing:.06em;color:var(--deep);opacity:.55;max-width:480px;}
+.hero-desc{font-size:15px;line-height:2;letter-spacing:.06em;color:var(--deep);opacity:.55;max-width:480px;}
 .hero-bg{position:absolute;right:-1rem;bottom:-2rem;font-family:'Playfair Display',serif;font-size:18vw;font-weight:900;font-style:italic;color:rgba(26,23,20,.04);line-height:1;pointer-events:none;}
 
 /* CATEGORY */
 .category{padding:5rem 2.5rem 0;}
 .category-header{display:flex;align-items:center;gap:1.5rem;margin-bottom:3rem;}
 .category-pill{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;border:2px solid var(--ink);border-radius:999px;padding:.9rem 2rem;flex-shrink:0;}
-.category-pill-en{font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.2rem;}
+.category-pill-en{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.2rem;}
 .category-pill-zh{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--ink);line-height:1;}
 .category-line{flex:1;height:1px;background:rgba(26,23,20,.12);}
 
@@ -53,42 +53,42 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.1rem 2.5rem;displa
 .case.reverse{grid-template-columns:1.8fr 1fr;}
 .case-info{padding:3rem;border-right:1px solid rgba(26,23,20,.08);}
 .case.reverse .case-info{border-right:none;border-left:1px solid rgba(26,23,20,.08);order:2;}
-.case-num{font-size:.45rem;letter-spacing:.25em;color:var(--rust);margin-bottom:.75rem;}
+.case-num{font-size:12px;letter-spacing:.25em;color:var(--rust);margin-bottom:.75rem;}
 .case-brand{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--ink);line-height:1;margin-bottom:.5rem;}
-.case-industry{font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:1.5rem;}
-.case-role-label{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.5rem;}
+.case-industry{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:1.5rem;}
+.case-role-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.5rem;}
 .case-role-tags{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.5rem;}
-.case-role-tag{font-size:.45rem;letter-spacing:.08em;padding:.25rem .65rem;border:1px solid rgba(26,23,20,.12);color:var(--deep);border-radius:999px;}
-.case-desc-label{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:.5rem;}
-.case-desc{font-size:.58rem;line-height:2;letter-spacing:.04em;color:var(--deep);opacity:.65;margin-bottom:1.5rem;}
-.case-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.3);padding-bottom:.1rem;transition:gap .2s;}
+.case-role-tag{font-size:12px;letter-spacing:.08em;padding:.25rem .65rem;border:1px solid rgba(26,23,20,.12);color:var(--deep);border-radius:999px;}
+.case-desc-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:.5rem;}
+.case-desc{font-size:15px;line-height:2;letter-spacing:.04em;color:var(--deep);opacity:.65;margin-bottom:1.5rem;}
+.case-link{display:inline-flex;align-items:center;gap:.4rem;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.3);padding-bottom:.1rem;transition:gap .2s;}
 .case-link:hover{gap:.7rem;}
 .case-link+.case-link{margin-left:1.5rem;}
 
 .case-visual{padding:3rem;display:flex;flex-direction:column;justify-content:center;background:var(--fog);}
 .case.reverse .case-visual{order:1;background:var(--fog);}
 .case-visual-num{font-family:'Playfair Display',serif;font-size:6rem;font-weight:900;color:rgba(26,23,20,.06);line-height:1;margin-bottom:1rem;}
-.case-visual-label{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.3;margin-bottom:.5rem;}
+.case-visual-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);opacity:.3;margin-bottom:.5rem;}
 .case-visual-stat{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:1.5rem;}
 .case-visual-tools{display:flex;flex-wrap:wrap;gap:.4rem;}
-.case-visual-tool{font-size:.42rem;letter-spacing:.1em;padding:.2rem .55rem;background:rgba(26,23,20,.06);color:var(--deep);border-radius:2px;}
+.case-visual-tool{font-size:12px;letter-spacing:.1em;padding:.2rem .55rem;background:rgba(26,23,20,.06);color:var(--deep);border-radius:2px;}
 
 /* AI SECTION */
 .ai-case{background:var(--ink);padding:3rem;color:var(--cream);margin-bottom:4rem;}
-.ai-case-label{font-size:.42rem;letter-spacing:.3em;text-transform:uppercase;color:var(--sand);margin-bottom:.75rem;}
+.ai-case-label{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--sand);margin-bottom:.75rem;}
 .ai-case-brand{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--cream);line-height:1;margin-bottom:.5rem;}
-.ai-case-industry{font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,225,.3);margin-bottom:2rem;}
+.ai-case-industry{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(240,235,225,.3);margin-bottom:2rem;}
 .ai-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5rem;margin-bottom:2rem;}
-.ai-item-label{font-size:.4rem;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin-bottom:.5rem;}
-.ai-item-value{font-size:.6rem;line-height:1.9;color:rgba(240,235,225,.65);}
-.ai-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);text-decoration:none;border-bottom:1px solid rgba(212,184,150,.3);padding-bottom:.1rem;transition:gap .2s;}
+.ai-item-label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--sand);margin-bottom:.5rem;}
+.ai-item-value{font-size:15px;line-height:1.9;color:rgba(240,235,225,.65);}
+.ai-link{display:inline-flex;align-items:center;gap:.4rem;font-size:15px;letter-spacing:.15em;text-transform:uppercase;color:var(--sand);text-decoration:none;border-bottom:1px solid rgba(212,184,150,.3);padding-bottom:.1rem;transition:gap .2s;}
 .ai-link:hover{gap:.7rem;}
 
 /* FOOTER */
 footer{border-top:1px solid rgba(26,23,20,.1);padding:1.5rem 2.5rem;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:.48rem;letter-spacing:.15em;color:var(--deep);opacity:.3;}
+.footer-copy{font-size:12px;letter-spacing:.15em;color:var(--deep);opacity:.3;}
 .footer-nav{display:flex;gap:1.5rem;}
-.footer-nav a{font-size:.48rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.35;transition:opacity .25s;}
+.footer-nav a{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink);text-decoration:none;opacity:.35;transition:opacity .25s;}
 .footer-nav a:hover{opacity:1;}
 
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s ease;}
@@ -312,12 +312,12 @@ footer{border-top:1px solid rgba(26,23,20,.1);padding:1.5rem 2.5rem;display:flex
 
   <div class="ai-case reveal">
     <p class="ai-case-label">06 · AI Project</p>
-    <h2 class="ai-case-brand">Michelin 馳加</h2>
+    <h2 class="ai-case-brand">某國際汽車輪胎品牌</h2>
     <p class="ai-case-industry">Automotive · AI Customer Service · Knowledge Base</p>
     <div class="ai-grid">
       <div>
         <p class="ai-item-label">專案背景</p>
-        <p class="ai-item-value">米其林旗下馳加輪胎連鎖品牌，需要建置一套 AI 客服系統，讓門市人員能透過 AI 快速回應客戶詢問，維持品牌一致性的溝通方式。</p>
+        <p class="ai-item-value">某國際汽車輪胎品牌，需要建置一套 AI 客服系統，讓門市人員能透過 AI 快速回應客戶詢問，維持品牌一致性的溝通方式。</p>
       </div>
       <div>
         <p class="ai-item-label">我負責的工作</p>
@@ -329,34 +329,12 @@ footer{border-top:1px solid rgba(26,23,20,.1);padding:1.5rem 2.5rem;display:flex
       </div>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.5rem;">
-      <span style="font-size:.42rem;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">Prompt Engineering</span>
-      <span style="font-size:.42rem;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">AI Agent 設計</span>
-      <span style="font-size:.42rem;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">知識庫建置</span>
-      <span style="font-size:.42rem;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">品牌溝通策略</span>
+      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">Prompt Engineering</span>
+      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">AI Agent 設計</span>
+      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">知識庫建置</span>
+      <span style="font-size:12px;letter-spacing:.08em;padding:.2rem .6rem;background:rgba(255,255,255,.08);color:rgba(240,235,225,.6);border-radius:2px;">品牌溝通策略</span>
     </div>
     <a class="ai-link" href="ai-case.html">← 返回頂部</a>
-  </div>
-</div>
-
-<!-- 其他貢獻 -->
-<div style="padding:0 2.5rem 5rem;">
-  <div style="background:var(--fog);padding:2.5rem;border:1px solid rgba(26,23,20,.08);">
-    <p style="font-size:.42rem;letter-spacing:.25em;text-transform:uppercase;color:var(--rust);margin-bottom:.75rem;">Other Contributions · 其他貢獻</p>
-    <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem;">試用期間其他工作支援</p>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
-      <div>
-        <p style="font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:.5rem;">活動企劃</p>
-        <p style="font-size:.58rem;line-height:1.9;color:var(--deep);opacity:.65;">春酒活動規劃與遊戲設計，並擔任春酒活動主持人。</p>
-      </div>
-      <div>
-        <p style="font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:.5rem;">專案支援</p>
-        <p style="font-size:.58rem;line-height:1.9;color:var(--deep);opacity:.65;">米其林馳加專案資料整理與講師聯繫協調。</p>
-      </div>
-      <div>
-        <p style="font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;color:var(--deep);opacity:.4;margin-bottom:.5rem;">行政支援</p>
-        <p style="font-size:.58rem;line-height:1.9;color:var(--deep);opacity:.65;">會議紀錄整理，協助多專案同時進行的時間管理。</p>
-      </div>
-    </div>
   </div>
 </div>
 

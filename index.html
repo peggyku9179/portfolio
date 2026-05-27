@@ -16,9 +16,9 @@
   --deep: #2a2420;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{font-size:18px;}
+html{font-size:12px;}
 html,body{width:100%;height:100%;overflow:hidden;}
-body{background:var(--cream);font-family:'Space Mono',monospace;font-size:13px;cursor:none;}
+body{background:var(--cream);font-family:'Space Mono',monospace;font-size:12px;cursor:none;}
 
 .cursor{position:fixed;width:10px;height:10px;background:var(--rust);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:multiply;transition:width .15s,height .15s;}
 .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid var(--rust);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;}
@@ -33,7 +33,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .topnav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;}
 .topnav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--ink);text-decoration:none;letter-spacing:.05em;}
 .topnav-links{display:flex;gap:1.8rem;}
-.topnav-links a{font-size:13px;letter-spacing:.15em;text-transform:uppercase;color:var(--deep);opacity:.38;text-decoration:none;transition:opacity .25s;}
+.topnav-links a{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);opacity:.5;text-decoration:none;transition:opacity .25s;}
 .topnav-links a:hover{opacity:1;}
 
 /* TICKER */
@@ -144,7 +144,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <a href="about.html">關於我</a>
     <a href="portfolio.html">完整作品集</a>
     <a href="exchange.html">海外交換</a>
-    <a href="#" id="contactTrigger">聯絡</a>
+    <a href="mailto:peggyku91@gmail.com">聯絡</a>
   </div>
 </nav>
 
@@ -275,22 +275,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     </div>
   </div>
 
-  <!-- 聯絡 popup -->
-  <div class="win-card" id="cContact" style="display:none;left:35%;top:25%;z-index:600;width:260px;">
-    <div class="win-bar">
-      <div class="win-dot r" id="closeContact" style="cursor:pointer;"></div>
-      <div class="win-dot y"></div><div class="win-dot g"></div>
-      <span class="win-bar-title">Contact</span>
-    </div>
-    <div style="padding:1.3rem 1.5rem;">
-      <p style="font-size:.38rem;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);margin-bottom:.4rem;">聯絡我</p>
-      <p style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:var(--ink);line-height:1;margin-bottom:.7rem;">Let's Work<br>Together.</p>
-      <p style="font-size:.5rem;line-height:1.9;color:var(--deep);opacity:.6;margin-bottom:1rem;">行銷內容 · 社群策略<br>短影音製作 · AI 工具整合</p>
-      <a style="display:block;font-size:.42rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.28);padding-bottom:.08rem;margin-bottom:.6rem;width:fit-content;" href="mailto:peggyku91@gmail.com">peggyku91@gmail.com →</a>
-      <a style="display:block;font-size:.42rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rust);text-decoration:none;border-bottom:1px solid rgba(201,79,42,.28);padding-bottom:.08rem;width:fit-content;" href="https://www.linkedin.com/in/古姵蓁peggyku/" target="_blank">LinkedIn →</a>
-    </div>
-  </div>
-
 </div>
 
 <!-- TICKER -->
@@ -342,13 +326,6 @@ window.addEventListener('load',()=>{
 });
 
 // CONTACT
-document.getElementById('contactTrigger').addEventListener('click',e=>{
-  e.preventDefault();
-  document.getElementById('cContact').style.display='block';
-});
-document.getElementById('closeContact').addEventListener('click',()=>{
-  document.getElementById('cContact').style.display='none';
-});
 </script>
 </body>
 </html>
