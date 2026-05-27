@@ -104,25 +104,12 @@ nav {
   align-items: flex-end; padding-bottom: 1rem;
 }
 
-/* Chapter nav */
-.chapter-nav {
-  display: flex; flex-direction: column; gap: 0.75rem;
-  align-items: flex-end;
-}
-.chapter-item {
-  display: flex; align-items: center; gap: 0.75rem;
-  text-decoration: none; color: var(--ink);
-  transition: gap 0.3s;
-}
-.chapter-item:hover { gap: 1.1rem; }
-.chapter-num { font-size: 0.45rem; letter-spacing: 0.2em; color: var(--blue); opacity: 0.6; }
-.chapter-name {
-  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--deep); opacity: 0.5; transition: opacity 0.3s;
-}
-.chapter-item:hover .chapter-name { opacity: 1; }
-.chapter-dot { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; opacity: 0.4; transition: opacity 0.3s; flex-shrink: 0; }
-.chapter-item:hover .chapter-dot { opacity: 1; }
+/* Fixed side nav */
+.side-nav{position:fixed;right:2rem;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:.6rem;}
+.side-nav a{display:flex;align-items:center;gap:.5rem;text-decoration:none;color:var(--deep);opacity:.2;transition:opacity .25s;}
+.side-nav a:hover{opacity:1;}.side-nav a:hover .side-nav-dot{background:var(--rust);}.side-nav a:hover .side-nav-label{display:block;}
+.side-nav-dot{width:5px;height:5px;border-radius:50%;background:rgba(26,23,20,.3);flex-shrink:0;transition:background .25s;}
+.side-nav-label{font-size:11px;letter-spacing:.1em;white-space:nowrap;display:none;}
 
 /* SECTIONS */
 .section { padding: 5rem 2.5rem; }
@@ -257,6 +244,16 @@ footer {
 </head>
 <body>
 
+<div class="side-nav">
+  <a href="#why"><span class="side-nav-dot"></span><span class="side-nav-label">為什麼</span></a>
+  <a href="#during"><span class="side-nav-dot"></span><span class="side-nav-label">交換期間</span></a>
+  <a href="#challenge"><span class="side-nav-dot"></span><span class="side-nav-label">挑戰</span></a>
+  <a href="#learned"><span class="side-nav-dot"></span><span class="side-nav-label">收穫</span></a>
+  <a href="#connection"><span class="side-nav-dot"></span><span class="side-nav-label">工作能力</span></a>
+  <a href="#slides"><span class="side-nav-dot"></span><span class="side-nav-label">完整簡報</span></a>
+  <a href="#lecture"><span class="side-nav-dot"></span><span class="side-nav-label">受邀演講</span></a>
+</div>
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -275,70 +272,126 @@ footer {
   <div class="hero-left">
     <div class="hero-eyebrow">
       <span class="hero-flag">🇸🇮</span>
-      <span class="hero-eyebrow-text">Exchange Experience · 2023–2024</span>
+      <span class="hero-eyebrow-text">Exchange Experience · 2024.09–2025.02</span>
     </div>
     <h1 class="hero-title">Ljubljana,<br><em>Slovenia.</em></h1>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <p class="hero-meta-num">5</p>
-        <p class="hero-meta-label">個月</p>
-      </div>
-      <div class="hero-meta-item">
-        <p class="hero-meta-num">50+</p>
-        <p class="hero-meta-label">頁簡報記錄</p>
-      </div>
-      <div class="hero-meta-item">
-        <p class="hero-meta-num">1</p>
-        <p class="hero-meta-label">段難忘的旅程</p>
-      </div>
+    <div style="display:flex;gap:2rem;margin-top:1.2rem;flex-wrap:wrap;">
+      <span style="font-size:13px;letter-spacing:.08em;color:rgba(26,23,20,.4);">University of Ljubljana</span>
+      <span style="font-size:13px;color:rgba(26,23,20,.2);">·</span>
+      <span style="font-size:13px;letter-spacing:.08em;color:rgba(26,23,20,.4);">斯洛維尼亞 Slovenia</span>
+      <span style="font-size:13px;color:rgba(26,23,20,.2);">·</span>
+      <span style="font-size:13px;letter-spacing:.08em;color:rgba(26,23,20,.4);">5 個月</span>
     </div>
-    <p class="hero-desc">
-      在斯洛維尼亞盧比安納大學度過的五個月，不只是一段求學經歷——是一次關於文化衝擊、自我挑戰與重新認識世界的完整旅程。
-    </p>
+
   </div>
 
-  <div class="hero-right">
-    <nav class="chapter-nav">
-      <a class="chapter-item" href="#slides">
-        <span class="chapter-num">01</span>
-        <span class="chapter-name">完整簡報</span>
-        <span class="chapter-dot"></span>
-      </a>
-      <a class="chapter-item" href="#chapters">
-        <span class="chapter-num">02</span>
-        <span class="chapter-name">章節導覽</span>
-        <span class="chapter-dot"></span>
-      </a>
-    </nav>
-  </div>
+  <div class="hero-right"></div>
 
   <div class="hero-bg-text" aria-hidden="true">SLO</div>
 </section>
 
-<!-- INFO STRIP -->
-<div class="info-grid reveal">
-  <div class="info-card">
-    <p class="info-label">學校</p>
-    <p class="info-value">University of Ljubljana</p>
-  </div>
-  <div class="info-card alt">
-    <p class="info-label">國家</p>
-    <p class="info-value">斯洛維尼亞<br>Slovenia</p>
-  </div>
-  <div class="info-card">
-    <p class="info-label">期間</p>
-    <p class="info-value">5 個月</p>
-  </div>
-  <div class="info-card alt">
-    <p class="info-label">首都</p>
-    <p class="info-value">盧比安納<br>Ljubljana</p>
-  </div>
-</div>
-
 <!-- CANVA SLIDES -->
-<section class="section" id="slides">
+<!-- 01 為什麼想交換 -->
+<section class="section" id="why">
   <div class="section-header reveal">
     <div class="section-num">01</div>
+    <div class="section-info">
+      <p class="section-label">Motivation · 為什麼想交換</p>
+      <h2 class="section-title">跳脫舒適圈的決定</h2>
+    </div>
+  </div>
+  <div style="max-width:700px;" class="reveal">
+    <p style="font-size:1.1rem;font-family:'Playfair Display',serif;font-style:italic;color:var(--ink);line-height:1.6;margin-bottom:1.5rem;border-left:3px solid var(--rust);padding-left:1.5rem;">「我一直希望能夠出國生活一段時間，不只停留在原本熟悉的環境裡。」</p>
+    <p style="font-size:15px;line-height:2.2;color:var(--deep);opacity:.7;">交換經驗對我來說，是一個非常跳脫舒適圈的決定。我想去體驗不同文化、在地方生活，讓自己練習獨立、適應變化，去擴展自己的眼界。這段期間，我練習在陌生環境中獨立生活、主動解決問題，也觀察不同文化背景下，人們如何溝通、學習與表達想法。</p>
+  </div>
+</section>
+
+<!-- 02 交換期間做了什麼 -->
+<section class="section alt" id="during">
+  <div class="section-header reveal">
+    <div class="section-num">02</div>
+    <div class="section-info">
+      <p class="section-label">Experience · 交換期間</p>
+      <h2 class="section-title">學習 · 生活 · 文化</h2>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;" class="reveal">
+    <div style="padding:2rem;background:var(--cream);border-top:3px solid var(--rust);">
+      <p style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.75rem;">學習面</p>
+      <p style="font-size:15px;line-height:2;color:var(--deep);opacity:.7;">接觸不同的課程內容與學習方式，觀察歐洲鼓勵型、開放式的教育風格。教授就像一起創作的夥伴，盡力提供支援與資源。</p>
+    </div>
+    <div style="padding:2rem;background:var(--cream);border-top:3px solid var(--rust);">
+      <p style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.75rem;">生活面</p>
+      <p style="font-size:15px;line-height:2;color:var(--deep);opacity:.7;">自己處理簽證、租房、交通、娛樂。練習主動尋找資源、解決問題，學會「為自己的所有決定負責」。</p>
+    </div>
+    <div style="padding:2rem;background:var(--cream);border-top:3px solid var(--rust);">
+      <p style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:.75rem;">文化觀察</p>
+      <p style="font-size:15px;line-height:2;color:var(--deep);opacity:.7;">觀察不同城市、生活節奏、設計美感與文化習慣。對「視覺美感」和「與人溝通」有更立體的理解。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 03 遇到的挑戰 -->
+<section class="section" id="challenge">
+  <div class="section-header reveal">
+    <div class="section-num">03</div>
+    <div class="section-info">
+      <p class="section-label">Challenge · 遇到的挑戰</p>
+      <h2 class="section-title">在陌生中快速適應</h2>
+    </div>
+  </div>
+  <div style="max-width:700px;" class="reveal">
+    <p style="font-size:15px;line-height:2.2;color:var(--deep);opacity:.7;">交換期間最大的挑戰，是要在陌生環境中快速適應。無論是語言、生活方式，還是和不同文化背景的人合作，都需要比平常更主動地理解對方的意思。有時候不是單純把話說出口就好，而是要確認對方是否真的理解，也要調整自己的表達方式。</p>
+  </div>
+</section>
+
+<!-- 04 學到什麼 -->
+<section class="section alt" id="learned">
+  <div class="section-header reveal">
+    <div class="section-num">04</div>
+    <div class="section-info">
+      <p class="section-label">Takeaway · 三大收穫</p>
+      <h2 class="section-title">我學到什麼</h2>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;" class="reveal">
+    <div style="padding:2rem 0;">
+      <p style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(26,23,20,.08);margin-bottom:.5rem;">①</p>
+      <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:.75rem;letter-spacing:.05em;">適應力</p>
+      <p style="font-size:15px;line-height:2;color:var(--deep);opacity:.65;">在不熟悉的環境裡，先觀察現況，再找到自己的節奏。面對新任務或不確定的狀況時，會先拆解問題，而不只是慌張。</p>
+    </div>
+    <div style="padding:2rem 0;">
+      <p style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(26,23,20,.08);margin-bottom:.5rem;">②</p>
+      <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:.75rem;letter-spacing:.05em;">溝通與理解能力</p>
+      <p style="font-size:15px;line-height:2;color:var(--deep);opacity:.65;">文化和語言不同，讓我更能意識到溝通需要站在對方的角度思考，不能只用自己的理解方式去表達。</p>
+    </div>
+    <div style="padding:2rem 0;">
+      <p style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:rgba(26,23,20,.08);margin-bottom:.5rem;">③</p>
+      <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:.75rem;letter-spacing:.05em;">視野與創作養分</p>
+      <p style="font-size:15px;line-height:2;color:var(--deep);opacity:.65;">城市、展覽、日常設計、生活文化的觀察，成為後續視覺設計、內容企劃和創作上的養分。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 連結工作能力 -->
+<section class="section" id="connection">
+  <div class="section-header reveal">
+    <div class="section-num">05</div>
+    <div class="section-info">
+      <p class="section-label">Connection · 連結工作能力</p>
+      <h2 class="section-title">這段經歷帶給我...</h2>
+    </div>
+  </div>
+  <div style="max-width:700px;" class="reveal">
+    <p style="font-size:15px;line-height:2.2;color:var(--deep);opacity:.7;margin-bottom:1.5rem;">這段交換經驗讓我更確定，我喜歡接觸不同的人、文化和議題，也喜歡把觀察到的內容轉化成視覺、文字或企劃表達。</p>
+    <p style="font-size:15px;line-height:2.2;color:var(--deep);opacity:.7;">對我來說，交換最大的收穫不只是語言或生活經驗，而是讓我更理解「獨立思考」、「解決問題」和「建立自信心」的重要性。我會更習慣先理解對象與情境，再整理資訊、規劃內容，並選擇適合的表達方式。未來不管是在整合行銷、活動企劃或策展相關工作中，我希望自己能持續運用這種觀察力和整理能力。</p>
+  </div>
+</section>
+
+<!-- 06 完整簡報 -->
+<section class="section alt" id="slides">
+  <div class="section-header reveal">
+    <div class="section-num">06</div>
     <div class="section-info">
       <p class="section-label">完整簡報 · Full Presentation</p>
       <h2 class="section-title">交換心得分享</h2>
@@ -355,51 +408,11 @@ footer {
 </section>
 
 <!-- CHAPTERS -->
-<section class="section alt" id="chapters">
-  <div class="section-header reveal">
-    <div class="section-num">02</div>
-    <div class="section-info">
-      <p class="section-label">章節導覽 · Chapters</p>
-      <h2 class="section-title">簡報內容</h2>
-    </div>
-  </div>
 
-  <div class="chapters-grid">
-    <div class="chapter-card reveal">
-      <span class="chapter-card-num">01</span>
-      <p class="chapter-card-label">Before Departure</p>
-      <h3 class="chapter-card-title">出發前準備</h3>
-      <p class="chapter-card-desc">簽證申請、住宿安排、行李準備、語言學習——記錄出發前的一切籌備過程與心境轉變。</p>
-    </div>
-
-    <div class="chapter-card reveal" style="transition-delay:0.1s">
-      <span class="chapter-card-num">02</span>
-      <p class="chapter-card-label">Culture & Life</p>
-      <h3 class="chapter-card-title">當地生活與文化衝擊</h3>
-      <p class="chapter-card-desc">語言障礙、飲食習慣、生活節奏的差異，以及在陌生環境中建立新生活的過程。</p>
-    </div>
-
-    <div class="chapter-card reveal" style="transition-delay:0.15s">
-      <span class="chapter-card-num">03</span>
-      <p class="chapter-card-label">Academics</p>
-      <h3 class="chapter-card-title">課程學習</h3>
-      <p class="chapter-card-desc">盧比安納大學的課程設計、學習方式與台灣的差異，以及在異國課堂中的收穫與挑戰。</p>
-    </div>
-
-    <div class="chapter-card reveal" style="transition-delay:0.2s">
-      <span class="chapter-card-num">04</span>
-      <p class="chapter-card-label">Travel & Exploration</p>
-      <h3 class="chapter-card-title">旅行紀錄</h3>
-      <p class="chapter-card-desc">趁著交換期間走遍歐洲各地，記錄沿途的風景、人文與那些說不清楚的感動。</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
 <!-- 受邀演講 -->
 <section class="section" id="lecture" style="padding: 5rem 2.5rem;">
   <div class="section-header reveal">
-    <div class="section-num">03</div>
+    <div class="section-num">07</div>
     <div class="section-info">
       <p class="section-label">Guest Speaker · 受邀演講</p>
       <h2 class="section-title">返校分享</h2>
