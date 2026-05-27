@@ -31,7 +31,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* NAV */
 .topnav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;justify-content:space-between;align-items:center;padding:.9rem 2rem;}
-.topnav-logo{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--ink);text-decoration:none;letter-spacing:.05em;}
+.topnav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--ink);text-decoration:none;letter-spacing:.05em;}
 .topnav-links{display:flex;gap:1.8rem;}
 .topnav-links a{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--deep);opacity:.5;text-decoration:none;transition:opacity .25s;}
 .topnav-links a:hover{opacity:1;}
@@ -144,7 +144,14 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
     <a href="about.html">關於我</a>
     <a href="portfolio.html">完整作品集</a>
     <a href="exchange.html">海外交換</a>
-    <a href="mailto:peggyku91@gmail.com">聯絡</a>
+    <div class="contact-dropdown">
+      <span class="contact-trigger">聯絡</span>
+      <div class="contact-menu">
+        <a href="tel:0979674670">☎ 0979-674-670</a>
+        <a href="mailto:peggyku91@gmail.com">@ peggyku91@gmail.com</a>
+        <a href="https://www.linkedin.com/in/古姵蓁peggyku/" target="_blank">in 古姵蓁 Peggy Ku</a>
+      </div>
+    </div>
   </div>
 </nav>
 
